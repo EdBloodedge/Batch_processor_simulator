@@ -47,7 +47,6 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -180,7 +179,6 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.btnStart);
             this.tabPage2.Controls.Add(this.txtTiempo);
             this.tabPage2.Controls.Add(this.groupBox4);
@@ -253,15 +251,6 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(510, 210);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(43, 16);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "Holas";
-            // 
             // input_window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -302,7 +291,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Label txtTiempo;
-        private System.Windows.Forms.Label label6;
     }
 }
 
