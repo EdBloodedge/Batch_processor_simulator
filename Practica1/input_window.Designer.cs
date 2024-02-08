@@ -30,24 +30,24 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label3 = new System.Windows.Forms.Label();
+            this.txtOpInput = new System.Windows.Forms.Label();
             this.textBoxId = new System.Windows.Forms.TextBox();
             this.labelProcesosInput = new System.Windows.Forms.Label();
             this.textBoxTimeMax = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.txtNameinput = new System.Windows.Forms.Label();
             this.textBoxOp = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.txtTimeMaxinput = new System.Windows.Forms.Label();
             this.textBoxProgrammerName = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.txtIdInput = new System.Windows.Forms.Label();
             this.AddBtn = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.processTimertxt = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
             this.timeTxt = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.processTimertxt = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -68,15 +68,15 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.label3);
+            this.tabPage1.Controls.Add(this.txtOpInput);
             this.tabPage1.Controls.Add(this.textBoxId);
             this.tabPage1.Controls.Add(this.labelProcesosInput);
             this.tabPage1.Controls.Add(this.textBoxTimeMax);
-            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.txtNameinput);
             this.tabPage1.Controls.Add(this.textBoxOp);
-            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.txtTimeMaxinput);
             this.tabPage1.Controls.Add(this.textBoxProgrammerName);
-            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.txtIdInput);
             this.tabPage1.Controls.Add(this.AddBtn);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
@@ -86,15 +86,15 @@
             this.tabPage1.Text = "Ingresa datos";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // txtOpInput
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 81);
-            this.label3.Margin = new System.Windows.Forms.Padding(150);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(131, 16);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Operacion a realizar:";
+            this.txtOpInput.AutoSize = true;
+            this.txtOpInput.Location = new System.Drawing.Point(21, 81);
+            this.txtOpInput.Margin = new System.Windows.Forms.Padding(150);
+            this.txtOpInput.Name = "txtOpInput";
+            this.txtOpInput.Size = new System.Drawing.Size(131, 16);
+            this.txtOpInput.TabIndex = 4;
+            this.txtOpInput.Text = "Operacion a realizar:";
             // 
             // textBoxId
             // 
@@ -121,15 +121,15 @@
             this.textBoxTimeMax.Size = new System.Drawing.Size(438, 22);
             this.textBoxTimeMax.TabIndex = 11;
             // 
-            // label1
+            // txtNameinput
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 56);
-            this.label1.Margin = new System.Windows.Forms.Padding(150);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(141, 16);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Nombre programador:";
+            this.txtNameinput.AutoSize = true;
+            this.txtNameinput.Location = new System.Drawing.Point(21, 56);
+            this.txtNameinput.Margin = new System.Windows.Forms.Padding(150);
+            this.txtNameinput.Name = "txtNameinput";
+            this.txtNameinput.Size = new System.Drawing.Size(141, 16);
+            this.txtNameinput.TabIndex = 3;
+            this.txtNameinput.Text = "Nombre programador:";
             // 
             // textBoxOp
             // 
@@ -139,15 +139,15 @@
             this.textBoxOp.Size = new System.Drawing.Size(438, 22);
             this.textBoxOp.TabIndex = 10;
             // 
-            // label4
+            // txtTimeMaxinput
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(21, 106);
-            this.label4.Margin = new System.Windows.Forms.Padding(150);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(166, 16);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Tiempo Maximo estimado:";
+            this.txtTimeMaxinput.AutoSize = true;
+            this.txtTimeMaxinput.Location = new System.Drawing.Point(21, 106);
+            this.txtTimeMaxinput.Margin = new System.Windows.Forms.Padding(150);
+            this.txtTimeMaxinput.Name = "txtTimeMaxinput";
+            this.txtTimeMaxinput.Size = new System.Drawing.Size(166, 16);
+            this.txtTimeMaxinput.TabIndex = 5;
+            this.txtTimeMaxinput.Text = "Tiempo Maximo estimado:";
             // 
             // textBoxProgrammerName
             // 
@@ -157,15 +157,15 @@
             this.textBoxProgrammerName.Size = new System.Drawing.Size(438, 22);
             this.textBoxProgrammerName.TabIndex = 9;
             // 
-            // label5
+            // txtIdInput
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(21, 131);
-            this.label5.Margin = new System.Windows.Forms.Padding(150);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(139, 16);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Numero de programa:";
+            this.txtIdInput.AutoSize = true;
+            this.txtIdInput.Location = new System.Drawing.Point(21, 131);
+            this.txtIdInput.Margin = new System.Windows.Forms.Padding(150);
+            this.txtIdInput.Name = "txtIdInput";
+            this.txtIdInput.Size = new System.Drawing.Size(139, 16);
+            this.txtIdInput.TabIndex = 6;
+            this.txtIdInput.Text = "Numero de programa:";
             // 
             // AddBtn
             // 
@@ -194,6 +194,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Procesos";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // processTimertxt
+            // 
+            this.processTimertxt.AutoSize = true;
+            this.processTimertxt.Location = new System.Drawing.Point(150, 269);
+            this.processTimertxt.Name = "processTimertxt";
+            this.processTimertxt.Size = new System.Drawing.Size(55, 16);
+            this.processTimertxt.TabIndex = 6;
+            this.processTimertxt.Text = "00:00:00";
+            this.processTimertxt.Click += new System.EventHandler(this.label2_Click);
             // 
             // btnStart
             // 
@@ -253,16 +263,6 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
-            // processTimertxt
-            // 
-            this.processTimertxt.AutoSize = true;
-            this.processTimertxt.Location = new System.Drawing.Point(150, 269);
-            this.processTimertxt.Name = "processTimertxt";
-            this.processTimertxt.Size = new System.Drawing.Size(55, 16);
-            this.processTimertxt.TabIndex = 6;
-            this.processTimertxt.Text = "00:00:00";
-            this.processTimertxt.Click += new System.EventHandler(this.label2_Click);
-            // 
             // input_window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -287,15 +287,15 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label txtOpInput;
         private System.Windows.Forms.TextBox textBoxId;
         private System.Windows.Forms.Label labelProcesosInput;
         private System.Windows.Forms.TextBox textBoxTimeMax;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label txtNameinput;
         private System.Windows.Forms.TextBox textBoxOp;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label txtTimeMaxinput;
         private System.Windows.Forms.TextBox textBoxProgrammerName;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label txtIdInput;
         private System.Windows.Forms.Button AddBtn;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox3;

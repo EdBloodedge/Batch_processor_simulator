@@ -61,7 +61,10 @@ namespace Practica1
         {
             Proceso newProcess = new Proceso();
 
-            newProcess.Name = textBoxProgrammerName.ToString();
+            newProcess.Name = textBoxProgrammerName.Text;
+            newProcess.TimeMax = int.Parse(textBoxTimeMax.Text);
+            newProcess.opName = textBoxOp.Text;
+            newProcess.id = textBoxId.Text;
             _Procesos.Enqueue(newProcess);
             //Aquí les recomiendo que hagan la parte de validación y la parte de agregar los procesos a la cola de procesos
         }
@@ -99,7 +102,7 @@ namespace Practica1
             Queue<GroupBox> _display_options_used = new Queue<GroupBox>();//Se crea la lista para las barras en uso
             Queue<GroupBox> _display_options = new Queue<GroupBox>();//Se crea la lista para las opciones de barras
             int initialValue = 0;
-            FillList(_Procesos);
+            //FillList(_Procesos);
             stop = false;
             // Se meten las barras de la UI a una cola 
             #region Agrupamiento de Barras 
