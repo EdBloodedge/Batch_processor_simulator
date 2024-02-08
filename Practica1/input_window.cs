@@ -16,8 +16,10 @@ namespace Practica1
 {
     public partial class input_window : Form
     {
+        Queue<Proceso> _Procesos = new Queue<Proceso>();
         System.Timers.Timer _GlobalTimer;
-        bool stop = false;
+        bool processStart = true;
+        bool stop = true;
         int h, m, s;
         private const int _count = 4;
         public input_window()
@@ -28,12 +30,14 @@ namespace Practica1
         private void Form1_Load(object sender, EventArgs e)
         {
             _GlobalTimer = new System.Timers.Timer();
-            _GlobalTimer.Interval = 1000;
-            _GlobalTimer.Elapsed += OnTimeEvent;
+            _GlobalTimer.Elapsed += new System.Timers.ElapsedEventHandler(_GlobalTimer_Elapsed);
+            _GlobalTimer.Interval = 100;   //here you can set your interval
+
+
 
         }
-
-        private void OnTimeEvent(object sender, ElapsedEventArgs e)//Esta es la parte del reloj
+        
+        void _GlobalTimer_Elapsed(object sender, ElapsedEventArgs e)//Esta es la parte del reloj
         {
             Invoke(new Action(() =>
             {
@@ -52,15 +56,19 @@ namespace Practica1
             }
             ));
         }
-
+        
         private void addBtn(object sender, EventArgs e)
         {
+            Proceso newProcess = new Proceso();
+
+            newProcess.Name = textBoxProgrammerName.ToString();
+            _Procesos.Enqueue(newProcess);
             //Aquí les recomiendo que hagan la parte de validación y la parte de agregar los procesos a la cola de procesos
         }
 
         private void input_window_FormClosed(object sender, FormClosedEventArgs e)
         {
-            _GlobalTimer.Stop();
+            
             Application.DoEvents();
         }
         private void reSize(GroupBox b, int amount)//Funcion para cambiar el tamaño de las barras
@@ -87,10 +95,12 @@ namespace Practica1
         }
         private async void FCFSSchedulling()
         {
-            Queue<Proceso> _Procesos = new Queue<Proceso>();//Se crea la lista de procesos
+            //Se crea la lista de procesos
             Queue<GroupBox> _display_options_used = new Queue<GroupBox>();//Se crea la lista para las barras en uso
             Queue<GroupBox> _display_options = new Queue<GroupBox>();//Se crea la lista para las opciones de barras
+            int initialValue = 0;
             FillList(_Procesos);
+            stop = false;
             // Se meten las barras de la UI a una cola 
             #region Agrupamiento de Barras 
             //
@@ -116,11 +126,14 @@ namespace Practica1
                 // Se verifica que el numero de procesos sea igual al numero de procesos deseado, esto se tiene que modificar
                 //eventualmente
                 while (_display_options_used.Count != 0)//Se verifica que todavia tenemos procesos en la cola
-                {   
-                    if (stop)//Validamos que se necesita seguir con la ejecución 
+                {
+                    if(processStart)
+
                     {
-                        break;
+                        initialValue = _Procesos.ElementAt(0).TimeMax;
+                        processStart = false;
                     }
+                    
                     #region Datos de Proceso
                     //Esta es la parte donde eventualmente vamos a modificar los labels(Por hacer)
                     // if (_Processes.Count > 0)
@@ -144,30 +157,76 @@ namespace Practica1
                         //Aquí ajustamos cada cuanto queremos que se espere nuestro planificador
                         await Task.Run(() =>
                         {
-                            Thread.Sleep(100);//Para motivos de pruebas lo tengo en 100 pero deberia ser 1000 <---
+                            Thread.Sleep(100);
+                            initialValue--;
+                            SetText(initialValue.ToString());
+                            //Para motivos de pruebas lo tengo en 100 pero deberia ser 1000 <---
                         });
                     }//Si si se termino la quitamos tanto en la lista de los procesos como en la cola de las barras
                     else
                     {
                         //Pasar a otra lista primero
+                       
                         _display_options_used.ElementAt(0).BackColor = Color.DimGray;
                         _display_options_used.Dequeue();
                         _Procesos.Dequeue();
+                        processStart = true;
+                        
+                        
                     }
                     #endregion
                 }
+                if (_Procesos.Count == 0)//Validamos que se necesita seguir con la ejecución 
+                {
+                    stop = true;
+                    break;
+                }
                 //Se detiene el reloj del procesos
             }
+            stop = true;
             //Se detiene el global
             _GlobalTimer.Stop();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void startBtn(object sender, EventArgs e)//Boton de comienzo
         {
             // Se comienzan tanto el moviemieto de las barras como en reloj
-            Thread _ThreadProcesses = new Thread(new ThreadStart(FCFSSchedulling));
-            _ThreadProcesses.Start();
+            if(stop)
+            {
+                Thread _ThreadProcesses = new Thread(new ThreadStart(FCFSSchedulling));
+                _ThreadProcesses.Start();
+                //Thread setProcessTimer = new Thread(new ThreadStart(processTimerset));
+                
+            }
             
+            
+            
+        }
+        delegate void SetTextCallback(string text);
+
+        private void SetText(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.processTimertxt.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(SetText);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.processTimertxt.Text = text;
+            }
+        }
+        private void processTimerset()
+        {
+            //processTimertxt.Text = initialValue.ToString();
         }
 
         private void label6_Click(object sender, EventArgs e)

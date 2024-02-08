@@ -47,6 +47,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.processTimertxt = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -179,6 +180,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.processTimertxt);
             this.tabPage2.Controls.Add(this.btnStart);
             this.tabPage2.Controls.Add(this.timeTxt);
             this.tabPage2.Controls.Add(this.groupBox4);
@@ -251,6 +253,16 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
+            // processTimertxt
+            // 
+            this.processTimertxt.AutoSize = true;
+            this.processTimertxt.Location = new System.Drawing.Point(150, 269);
+            this.processTimertxt.Name = "processTimertxt";
+            this.processTimertxt.Size = new System.Drawing.Size(55, 16);
+            this.processTimertxt.TabIndex = 6;
+            this.processTimertxt.Text = "00:00:00";
+            this.processTimertxt.Click += new System.EventHandler(this.label2_Click);
+            // 
             // input_window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -291,6 +303,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Label timeTxt;
+        private System.Windows.Forms.Label processTimertxt;
     }
 }
 
