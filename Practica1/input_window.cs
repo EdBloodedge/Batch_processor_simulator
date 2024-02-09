@@ -12,16 +12,17 @@ using System.Timers;
 using System.Windows.Forms;
 
 
+
 namespace Practica1
 {
     public partial class input_window : Form
     {
         Queue<Proceso> _Procesos = new Queue<Proceso>();
-        Queue<Label> usedLabels = new Queue<Label>();
         System.Timers.Timer _GlobalTimer;
+        Queue<Label> labelsUsed = new Queue<Label>();
+        int contLabelToBeUsed = 0;
         bool processStart = true;
         bool stop = true;
-        int labelToBeChanged = 0;
         int h, m, s;
         private const int _count = 4;
         public input_window()
@@ -34,8 +35,6 @@ namespace Practica1
             _GlobalTimer = new System.Timers.Timer();
             _GlobalTimer.Elapsed += new System.Timers.ElapsedEventHandler(_GlobalTimer_Elapsed);
             _GlobalTimer.Interval = 100;   //here you can set your interval
-
-
 
         }
         
@@ -104,15 +103,16 @@ namespace Practica1
             Queue<GroupBox> _display_options_used = new Queue<GroupBox>();//Se crea la lista para las barras en uso
             Queue<GroupBox> _display_options = new Queue<GroupBox>();//Se crea la lista para las opciones de barras
             int initialValue = 0;
-            usedLabels.Enqueue(labelId);
-            usedLabels.Enqueue(labelOperation);
-            usedLabels.Enqueue(labelProgrammerName);
             //FillList(_Procesos);
             stop = false;
             // Se meten las barras de la UI a una cola 
             #region Agrupamiento de Barras 
             //
             //Se agregan las 4 opciones a la cola
+            labelsUsed.Enqueue(labelId);
+            labelsUsed.Enqueue(labelOperation);
+            labelsUsed.Enqueue(labelProgrammerName);
+        
             _display_options.Enqueue(groupBox1);
             _display_options.Enqueue(groupBox2);
             _display_options.Enqueue(groupBox3);
@@ -124,14 +124,9 @@ namespace Practica1
                 for(int i=0; i<_Procesos.Count; i++)// Se ajustan los tamaños de las barras dependiendo de cuantas necesitemos
                 {
                     _display_options_used.Enqueue(_display_options.ElementAt(i));
-<<<<<<< Updated upstream
-                    reSize(_display_options_used.ElementAt(i), _Procesos.ElementAt(i).TimeMax * 10);
-                    if(i == _count-1)
-=======
                     reSize(_display_options_used.ElementAt(i), _Procesos.ElementAt(i).TimeMax * 10+10);
                     
                     if (i == _count-1)
->>>>>>> Stashed changes
                     {
                         break;
                     }
@@ -144,11 +139,11 @@ namespace Practica1
                     if(processStart)
 
                     {
-                        labelToBeChanged = 0;
+                        contLabelToBeUsed = 0;
                         ProcessInfo(_Procesos.ElementAt(0).id);
-                        labelToBeChanged = 1;
+                        contLabelToBeUsed = 1;
                         ProcessInfo(_Procesos.ElementAt(0).opName);
-                        labelToBeChanged = 2;
+                        contLabelToBeUsed = 2;
                         ProcessInfo(_Procesos.ElementAt(0).Name);
                         initialValue = _Procesos.ElementAt(0).TimeMax;
                         processStart = false;
@@ -167,6 +162,9 @@ namespace Practica1
                     if (_display_options_used.First().Size.Height > 10)//Verificamos que la barra actual no se haya "Terminado"
                     {
                         _display_options_used.First().BackColor = Color.Red;//El proceso actual se pone en rojo
+
+
+
                         if (_display_options_used.Count > 1)
                         {
                             // Si hay más de un proceso por terminar entonces se pone a el siguiente en azul
@@ -185,8 +183,8 @@ namespace Practica1
                     }//Si si se termino la quitamos tanto en la lista de los procesos como en la cola de las barras
                     else
                     {
-                        //PasalistOfFinsihedProcesses.Items.Addr a otra lista primero
-                        AddText(_Procesos.ElementAt(0).Name);
+                        //Pasar a otra lista primero
+                       
                         _display_options_used.ElementAt(0).BackColor = Color.DimGray;
                         _display_options_used.Dequeue();
                         _Procesos.Dequeue();
@@ -228,27 +226,8 @@ namespace Practica1
             
         }
         delegate void SetTextCallback(string text);
-<<<<<<< Updated upstream
-        delegate void AddTextCallBack(string text);
-        private void AddText(string text)
-        {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
-            if (this.listOfFinsihedProcesses.InvokeRequired)
-            {
-                AddTextCallBack d = new AddTextCallBack(AddText);
-                this.Invoke(d, new object[] { text });
-            }
-            else
-            {
-                this.listOfFinsihedProcesses.Items.Add(text);
-            }
-        }
-=======
         delegate void ProcessInfoCallback(string text);
 
->>>>>>> Stashed changes
         private void SetText(string text)
         {
             // InvokeRequired required compares the thread ID of the
@@ -264,12 +243,12 @@ namespace Practica1
                 this.processTimertxt.Text = text;
             }
         }
-<<<<<<< Updated upstream
-=======
 
         private void ProcessInfo(string text) //Función para cambiar los datos de cualquier label, sin tener qué hacer una por cada label.
         {
+
             
+
             if (this.InvokeRequired)
             {
                 ProcessInfoCallback d = new ProcessInfoCallback(ProcessInfo);
@@ -277,7 +256,7 @@ namespace Practica1
             }
             else
             {
-                this.usedLabels.ElementAt(labelToBeChanged).Text = text;
+                labelsUsed.ElementAt(contLabelToBeUsed).Text = text;
             }
         }
 
@@ -286,7 +265,6 @@ namespace Practica1
 
         }
 
->>>>>>> Stashed changes
         private void processTimerset()
         {
             //processTimertxt.Text = initialValue.ToString();

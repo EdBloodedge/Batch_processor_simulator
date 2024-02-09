@@ -52,6 +52,7 @@
     <Compile Include="input_window.Designer.cs">
       <DependentUpon>input_window.cs</DependentUpon>
     </Compile>
+    <Compile Include="Labels.cs" />
     <Compile Include="Proceso.cs" />
     <Compile Include="process_visualizer.cs">
       <SubType>Form</SubType>
