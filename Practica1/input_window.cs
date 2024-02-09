@@ -19,6 +19,8 @@ namespace Practica1
     {
         Queue<Proceso> _Procesos = new Queue<Proceso>();
         System.Timers.Timer _GlobalTimer;
+        Queue<Label> labelsUsed = new Queue<Label>();
+        int contLabelToBeUsed = 0;
         bool processStart = true;
         bool stop = true;
         int h, m, s;
@@ -107,6 +109,10 @@ namespace Practica1
             #region Agrupamiento de Barras 
             //
             //Se agregan las 4 opciones a la cola
+            labelsUsed.Enqueue(labelId);
+            labelsUsed.Enqueue(labelOperation);
+            labelsUsed.Enqueue(labelProgrammerName);
+        
             _display_options.Enqueue(groupBox1);
             _display_options.Enqueue(groupBox2);
             _display_options.Enqueue(groupBox3);
@@ -118,10 +124,9 @@ namespace Practica1
                 for(int i=0; i<_Procesos.Count; i++)// Se ajustan los tamaños de las barras dependiendo de cuantas necesitemos
                 {
                     _display_options_used.Enqueue(_display_options.ElementAt(i));
-                    reSize(_display_options_used.ElementAt(i), _Procesos.ElementAt(i).TimeMax * 10);
-                    ProcessInfo(_Procesos.ElementAt(i).id, 0);
-                    ProcessInfo(_Procesos.ElementAt(i).opName, 1);
-                    ProcessInfo(_Procesos.ElementAt(i).Name, 2);
+
+                    reSize(_display_options_used.ElementAt(i), _Procesos.ElementAt(i).TimeMax * 10+10);
+
                     if (i == _count-1)
                     {
                         break;
@@ -135,6 +140,12 @@ namespace Practica1
                     if(processStart)
 
                     {
+                        contLabelToBeUsed = 0;
+                        ProcessInfo(_Procesos.ElementAt(0).id);
+                        contLabelToBeUsed = 1;
+                        ProcessInfo(_Procesos.ElementAt(0).opName);
+                        contLabelToBeUsed = 2;
+                        ProcessInfo(_Procesos.ElementAt(0).Name);
                         initialValue = _Procesos.ElementAt(0).TimeMax;
                         processStart = false;
                     }
@@ -216,7 +227,9 @@ namespace Practica1
             
         }
         delegate void SetTextCallback(string text);
-        delegate void ProcessInfoCallback(string text, int i);
+
+        delegate void ProcessInfoCallback(string text);
+
 
         private void SetText(string text)
         {
@@ -234,34 +247,18 @@ namespace Practica1
             }
         }
 
-        private void ProcessInfo(string text, int i) //Función para cambiar los datos de cualquier label, sin tener qué hacer una por cada label.
-        {
+            
+            if (this.InvokeRequired)
 
-            Label l = null;
-
-            switch (i)
-            {
-                case 0:
-                    l = this.labelId;
-                    break;
-
-                case 1:
-                    l = this.labelOperation;
-                    break;
-
-                case 2:
-                    l = this.labelProgrammerName;
-                    break;
-            }
-
-            if (l.InvokeRequired)
             {
                 ProcessInfoCallback d = new ProcessInfoCallback(ProcessInfo);
                 this.Invoke(d, new object[] { text });
             }
             else
             {
-                l.Text = text;
+
+                labelsUsed.ElementAt(contLabelToBeUsed).Text = text;
+
             }
         }
 
