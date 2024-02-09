@@ -168,8 +168,8 @@ namespace Practica1
                     }//Si si se termino la quitamos tanto en la lista de los procesos como en la cola de las barras
                     else
                     {
-                        //Pasar a otra lista primero
-                       
+                        //PasalistOfFinsihedProcesses.Items.Addr a otra lista primero
+                        AddText(_Procesos.ElementAt(0).Name);
                         _display_options_used.ElementAt(0).BackColor = Color.DimGray;
                         _display_options_used.Dequeue();
                         _Procesos.Dequeue();
@@ -211,7 +211,22 @@ namespace Practica1
             
         }
         delegate void SetTextCallback(string text);
-
+        delegate void AddTextCallBack(string text);
+        private void AddText(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.listOfFinsihedProcesses.InvokeRequired)
+            {
+                AddTextCallBack d = new AddTextCallBack(AddText);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.listOfFinsihedProcesses.Items.Add(text);
+            }
+        }
         private void SetText(string text)
         {
             // InvokeRequired required compares the thread ID of the

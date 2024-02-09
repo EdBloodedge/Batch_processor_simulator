@@ -48,6 +48,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.listOfFinsihedProcesses = new System.Windows.Forms.ListView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -180,6 +181,10 @@
             // 
             // tabPage2
             // 
+<<<<<<< Updated upstream
+=======
+            this.tabPage2.Controls.Add(this.listOfFinsihedProcesses);
+>>>>>>> Stashed changes
             this.tabPage2.Controls.Add(this.processTimertxt);
             this.tabPage2.Controls.Add(this.btnStart);
             this.tabPage2.Controls.Add(this.timeTxt);
@@ -263,6 +268,15 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
+            // listOfFinsihedProcesses
+            // 
+            this.listOfFinsihedProcesses.HideSelection = false;
+            this.listOfFinsihedProcesses.Location = new System.Drawing.Point(582, 82);
+            this.listOfFinsihedProcesses.Name = "listOfFinsihedProcesses";
+            this.listOfFinsihedProcesses.Size = new System.Drawing.Size(121, 97);
+            this.listOfFinsihedProcesses.TabIndex = 7;
+            this.listOfFinsihedProcesses.UseCompatibleStateImageBehavior = false;
+            // 
             // input_window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -304,6 +318,7 @@
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Label timeTxt;
         private System.Windows.Forms.Label processTimertxt;
+        private System.Windows.Forms.ListView listOfFinsihedProcesses;
     }
 }
 
