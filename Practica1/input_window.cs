@@ -124,8 +124,9 @@ namespace Practica1
                 for(int i=0; i<_Procesos.Count; i++)// Se ajustan los tamaños de las barras dependiendo de cuantas necesitemos
                 {
                     _display_options_used.Enqueue(_display_options.ElementAt(i));
+
                     reSize(_display_options_used.ElementAt(i), _Procesos.ElementAt(i).TimeMax * 10+10);
-                    
+
                     if (i == _count-1)
                     {
                         break;
@@ -226,7 +227,9 @@ namespace Practica1
             
         }
         delegate void SetTextCallback(string text);
+
         delegate void ProcessInfoCallback(string text);
+
 
         private void SetText(string text)
         {
@@ -244,19 +247,18 @@ namespace Practica1
             }
         }
 
-        private void ProcessInfo(string text) //Función para cambiar los datos de cualquier label, sin tener qué hacer una por cada label.
-        {
-
             
-
             if (this.InvokeRequired)
+
             {
                 ProcessInfoCallback d = new ProcessInfoCallback(ProcessInfo);
                 this.Invoke(d, new object[] { text });
             }
             else
             {
+
                 labelsUsed.ElementAt(contLabelToBeUsed).Text = text;
+
             }
         }
 
