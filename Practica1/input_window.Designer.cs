@@ -180,6 +180,7 @@
             // 
             // tabPage2
             // 
+          
             this.tabPage2.Controls.Add(this.processTimertxt);
             this.tabPage2.Controls.Add(this.btnStart);
             this.tabPage2.Controls.Add(this.timeTxt);
@@ -302,6 +303,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnStart;
+
         private System.Windows.Forms.Label timeTxt;
         private System.Windows.Forms.Label processTimertxt;
     }
