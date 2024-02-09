@@ -12,6 +12,7 @@ using System.Timers;
 using System.Windows.Forms;
 
 
+
 namespace Practica1
 {
     public partial class input_window : Form
@@ -32,8 +33,6 @@ namespace Practica1
             _GlobalTimer = new System.Timers.Timer();
             _GlobalTimer.Elapsed += new System.Timers.ElapsedEventHandler(_GlobalTimer_Elapsed);
             _GlobalTimer.Interval = 100;   //here you can set your interval
-
-
 
         }
         
@@ -120,7 +119,10 @@ namespace Practica1
                 {
                     _display_options_used.Enqueue(_display_options.ElementAt(i));
                     reSize(_display_options_used.ElementAt(i), _Procesos.ElementAt(i).TimeMax * 10);
-                    if(i == _count-1)
+                    ProcessInfo(_Procesos.ElementAt(i).id, 0);
+                    ProcessInfo(_Procesos.ElementAt(i).opName, 1);
+                    ProcessInfo(_Procesos.ElementAt(i).Name, 2);
+                    if (i == _count-1)
                     {
                         break;
                     }
@@ -150,6 +152,9 @@ namespace Practica1
                     if (_display_options_used.First().Size.Height > 10)//Verificamos que la barra actual no se haya "Terminado"
                     {
                         _display_options_used.First().BackColor = Color.Red;//El proceso actual se pone en rojo
+
+
+
                         if (_display_options_used.Count > 1)
                         {
                             // Si hay más de un proceso por terminar entonces se pone a el siguiente en azul
@@ -211,6 +216,7 @@ namespace Practica1
             
         }
         delegate void SetTextCallback(string text);
+        delegate void ProcessInfoCallback(string text, int i);
 
         private void SetText(string text)
         {
@@ -227,6 +233,43 @@ namespace Practica1
                 this.processTimertxt.Text = text;
             }
         }
+
+        private void ProcessInfo(string text, int i) //Función para cambiar los datos de cualquier label, sin tener qué hacer una por cada label.
+        {
+
+            Label l = null;
+
+            switch (i)
+            {
+                case 0:
+                    l = this.labelId;
+                    break;
+
+                case 1:
+                    l = this.labelOperation;
+                    break;
+
+                case 2:
+                    l = this.labelProgrammerName;
+                    break;
+            }
+
+            if (l.InvokeRequired)
+            {
+                ProcessInfoCallback d = new ProcessInfoCallback(ProcessInfo);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                l.Text = text;
+            }
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void processTimerset()
         {
             //processTimertxt.Text = initialValue.ToString();
