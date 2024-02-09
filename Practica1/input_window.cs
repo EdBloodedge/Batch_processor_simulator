@@ -17,9 +17,11 @@ namespace Practica1
     public partial class input_window : Form
     {
         Queue<Proceso> _Procesos = new Queue<Proceso>();
+        Queue<Label> usedLabels = new Queue<Label>();
         System.Timers.Timer _GlobalTimer;
         bool processStart = true;
         bool stop = true;
+        int labelToBeChanged = 0;
         int h, m, s;
         private const int _count = 4;
         public input_window()
@@ -102,6 +104,9 @@ namespace Practica1
             Queue<GroupBox> _display_options_used = new Queue<GroupBox>();//Se crea la lista para las barras en uso
             Queue<GroupBox> _display_options = new Queue<GroupBox>();//Se crea la lista para las opciones de barras
             int initialValue = 0;
+            usedLabels.Enqueue(labelId);
+            usedLabels.Enqueue(labelOperation);
+            usedLabels.Enqueue(labelProgrammerName);
             //FillList(_Procesos);
             stop = false;
             // Se meten las barras de la UI a una cola 
@@ -119,8 +124,14 @@ namespace Practica1
                 for(int i=0; i<_Procesos.Count; i++)// Se ajustan los tamaños de las barras dependiendo de cuantas necesitemos
                 {
                     _display_options_used.Enqueue(_display_options.ElementAt(i));
+<<<<<<< Updated upstream
                     reSize(_display_options_used.ElementAt(i), _Procesos.ElementAt(i).TimeMax * 10);
                     if(i == _count-1)
+=======
+                    reSize(_display_options_used.ElementAt(i), _Procesos.ElementAt(i).TimeMax * 10+10);
+                    
+                    if (i == _count-1)
+>>>>>>> Stashed changes
                     {
                         break;
                     }
@@ -133,6 +144,12 @@ namespace Practica1
                     if(processStart)
 
                     {
+                        labelToBeChanged = 0;
+                        ProcessInfo(_Procesos.ElementAt(0).id);
+                        labelToBeChanged = 1;
+                        ProcessInfo(_Procesos.ElementAt(0).opName);
+                        labelToBeChanged = 2;
+                        ProcessInfo(_Procesos.ElementAt(0).Name);
                         initialValue = _Procesos.ElementAt(0).TimeMax;
                         processStart = false;
                     }
@@ -211,6 +228,7 @@ namespace Practica1
             
         }
         delegate void SetTextCallback(string text);
+<<<<<<< Updated upstream
         delegate void AddTextCallBack(string text);
         private void AddText(string text)
         {
@@ -227,6 +245,10 @@ namespace Practica1
                 this.listOfFinsihedProcesses.Items.Add(text);
             }
         }
+=======
+        delegate void ProcessInfoCallback(string text);
+
+>>>>>>> Stashed changes
         private void SetText(string text)
         {
             // InvokeRequired required compares the thread ID of the
@@ -242,6 +264,29 @@ namespace Practica1
                 this.processTimertxt.Text = text;
             }
         }
+<<<<<<< Updated upstream
+=======
+
+        private void ProcessInfo(string text) //Función para cambiar los datos de cualquier label, sin tener qué hacer una por cada label.
+        {
+            
+            if (this.InvokeRequired)
+            {
+                ProcessInfoCallback d = new ProcessInfoCallback(ProcessInfo);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.usedLabels.ElementAt(labelToBeChanged).Text = text;
+            }
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+>>>>>>> Stashed changes
         private void processTimerset()
         {
             //processTimertxt.Text = initialValue.ToString();
