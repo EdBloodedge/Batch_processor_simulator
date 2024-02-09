@@ -10,7 +10,7 @@ namespace Practica1
     {
         private string _Name;
         private int _TimeMax;
-        private string _nameProgrammer;
+        private string _opName;
         private string _id;
 
         public string Name
@@ -25,10 +25,10 @@ namespace Practica1
             set { _TimeMax = value; }
         }
 
-        public string nameProgrammer
+        public string opName
         {
-            get { return _nameProgrammer; }
-            set { _nameProgrammer = value; }
+            get { return _opName; }
+            set { _opName = value; }
         }
 
         public string id
