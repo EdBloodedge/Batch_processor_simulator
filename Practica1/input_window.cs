@@ -5,11 +5,14 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
 
 
 
@@ -19,6 +22,7 @@ namespace Practica1
     {
         Queue<Proceso> _Procesos = new Queue<Proceso>();
         System.Timers.Timer _GlobalTimer;
+        int _lotesCont = 0;
         Queue<Label> labelsUsed = new Queue<Label>();
         int contLabelToBeUsed = 0;
         bool processStart = true;
@@ -34,6 +38,7 @@ namespace Practica1
         {
             _GlobalTimer = new System.Timers.Timer();
             _GlobalTimer.Elapsed += new System.Timers.ElapsedEventHandler(_GlobalTimer_Elapsed);
+            
             _GlobalTimer.Interval = 100;   //here you can set your interval
 
         }
@@ -60,6 +65,10 @@ namespace Practica1
         
         private void addBtn(object sender, EventArgs e)
         {
+            if(_Procesos.Count==0)
+            {
+                _lotesCont++;
+            }
             Proceso newProcess = new Proceso();
 
             newProcess.Name = textBoxProgrammerName.Text;
@@ -67,7 +76,19 @@ namespace Practica1
             newProcess.opName = textBoxOp.Text;
             newProcess.id = textBoxId.Text;
             _Procesos.Enqueue(newProcess);
+            if(_Procesos.Count%4==0)
+            {
+                _lotesCont++;
+            }
             //Aquí les recomiendo que hagan la parte de validación y la parte de agregar los procesos a la cola de procesos
+        }
+        public static string Evaluate(string expression)
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("expression", typeof(string), expression);
+            DataRow row = table.NewRow();
+            table.Rows.Add(row);
+            return (string)row["expression"];
         }
 
         private void input_window_FormClosed(object sender, FormClosedEventArgs e)
@@ -107,12 +128,15 @@ namespace Practica1
             stop = false;
             // Se meten las barras de la UI a una cola 
             #region Agrupamiento de Barras 
+            
+            
             //
             //Se agregan las 4 opciones a la cola
             labelsUsed.Enqueue(labelId);
             labelsUsed.Enqueue(labelOperation);
             labelsUsed.Enqueue(labelProgrammerName);
-        
+            labelsUsed.Enqueue(_contLotesOutput);
+
             _display_options.Enqueue(groupBox1);
             _display_options.Enqueue(groupBox2);
             _display_options.Enqueue(groupBox3);
@@ -131,7 +155,9 @@ namespace Practica1
                         break;
                     }
                 }
-            #endregion
+                #endregion
+                contLabelToBeUsed = 3;
+                ProcessInfo(_lotesCont.ToString());
                 // Se verifica que el numero de procesos sea igual al numero de procesos deseado, esto se tiene que modificar
                 //eventualmente
                 while (_display_options_used.Count != 0)//Se verifica que todavia tenemos procesos en la cola
@@ -139,6 +165,7 @@ namespace Practica1
                     if(processStart)
 
                     {
+                        
                         contLabelToBeUsed = 0;
                         ProcessInfo(_Procesos.ElementAt(0).id);
                         contLabelToBeUsed = 1;
@@ -187,23 +214,32 @@ namespace Practica1
                        
                         _display_options_used.ElementAt(0).BackColor = Color.DimGray;
                         _display_options_used.Dequeue();
-                        _Procesos.Dequeue();
+                        SetList(_Procesos.Dequeue());
                         processStart = true;
                         
                         
                     }
                     #endregion
                 }
+                
                 if (_Procesos.Count == 0)//Validamos que se necesita seguir con la ejecución 
                 {
+                    _lotesCont--;
+                    contLabelToBeUsed = 3;
+                    ProcessInfo(_lotesCont.ToString());
                     stop = true;
                     break;
                 }
-                //Se detiene el reloj del procesos
+                
+                _lotesCont--;
+
             }
             stop = true;
             //Se detiene el global
             _GlobalTimer.Stop();
+            h = 0;
+            s = 0;
+            m = 0;
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -226,7 +262,9 @@ namespace Practica1
             
         }
         delegate void SetTextCallback(string text);
+        delegate void SetListCallback(Proceso text);
         delegate void ProcessInfoCallback(string text);
+        
 
         private void SetText(string text)
         {
@@ -243,6 +281,28 @@ namespace Practica1
                 this.processTimertxt.Text = text;
             }
         }
+        private void SetList(Proceso proceso)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.listViewPastProcesses.InvokeRequired)
+            {
+                SetListCallback d = new SetListCallback(SetList);
+                this.Invoke(d, new object[] { proceso });
+            }
+            else
+            {
+                string[] row1 = { "s1", "s2", "s3" };
+                listViewPastProcesses.Items.Add(proceso.Name).SubItems.AddRange(row1);
+                listViewPastProcesses.Items.Add(Evaluate(proceso.opName)).SubItems.AddRange(row1);
+                listViewPastProcesses.Items.Add(proceso.id).SubItems.AddRange(row1);
+                listViewPastProcesses.Items.Add(proceso.TimeMax.ToString()).SubItems.AddRange(row1);
+                //this.listViewPastProcesses.Items.Add("Column1Text").SubItems.AddRange("","","");
+                //this.listViewPastProcesses.Items.Add(proceso);
+            }
+        }
+
 
         private void ProcessInfo(string text) //Función para cambiar los datos de cualquier label, sin tener qué hacer una por cada label.
         {
@@ -256,6 +316,7 @@ namespace Practica1
             }
             else
             {
+                
                 labelsUsed.ElementAt(contLabelToBeUsed).Text = text;
             }
         }

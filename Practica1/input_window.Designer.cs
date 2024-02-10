@@ -41,22 +41,25 @@
             this.txtIdInput = new System.Windows.Forms.Label();
             this.AddBtn = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.listViewPastProcesses = new System.Windows.Forms.ListView();
+            this.groupBoxInProgress = new System.Windows.Forms.GroupBox();
+            this.labelProgrammerName = new System.Windows.Forms.Label();
+            this.labelOperation = new System.Windows.Forms.Label();
+            this.labelId = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.processTimertxt = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
             this.timeTxt = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.groupBoxInProgress = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.labelId = new System.Windows.Forms.Label();
-            this.labelOperation = new System.Windows.Forms.Label();
-            this.labelProgrammerName = new System.Windows.Forms.Label();
+            this._contLoteslbl = new System.Windows.Forms.Label();
+            this._contLotesOutput = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -190,6 +193,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.listViewPastProcesses);
             this.tabPage2.Controls.Add(this.groupBoxInProgress);
             this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.btnStart);
@@ -206,15 +210,117 @@
             this.tabPage2.Text = "Procesos";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // listViewPastProcesses
+            // 
+            this.listViewPastProcesses.HideSelection = false;
+            this.listViewPastProcesses.Location = new System.Drawing.Point(539, 6);
+            this.listViewPastProcesses.Name = "listViewPastProcesses";
+            this.listViewPastProcesses.Size = new System.Drawing.Size(233, 368);
+            this.listViewPastProcesses.TabIndex = 11;
+            this.listViewPastProcesses.UseCompatibleStateImageBehavior = false;
+            // 
+            // groupBoxInProgress
+            // 
+            this.groupBoxInProgress.Controls.Add(this._contLotesOutput);
+            this.groupBoxInProgress.Controls.Add(this._contLoteslbl);
+            this.groupBoxInProgress.Controls.Add(this.labelProgrammerName);
+            this.groupBoxInProgress.Controls.Add(this.labelOperation);
+            this.groupBoxInProgress.Controls.Add(this.labelId);
+            this.groupBoxInProgress.Controls.Add(this.label5);
+            this.groupBoxInProgress.Controls.Add(this.label4);
+            this.groupBoxInProgress.Controls.Add(this.label2);
+            this.groupBoxInProgress.Controls.Add(this.label3);
+            this.groupBoxInProgress.Controls.Add(this.processTimertxt);
+            this.groupBoxInProgress.Location = new System.Drawing.Point(8, 193);
+            this.groupBoxInProgress.Name = "groupBoxInProgress";
+            this.groupBoxInProgress.Size = new System.Drawing.Size(365, 181);
+            this.groupBoxInProgress.TabIndex = 10;
+            this.groupBoxInProgress.TabStop = false;
+            this.groupBoxInProgress.Text = "Proceso en ejecución";
+            // 
+            // labelProgrammerName
+            // 
+            this.labelProgrammerName.AutoSize = true;
+            this.labelProgrammerName.Location = new System.Drawing.Point(147, 117);
+            this.labelProgrammerName.Name = "labelProgrammerName";
+            this.labelProgrammerName.Size = new System.Drawing.Size(0, 16);
+            this.labelProgrammerName.TabIndex = 13;
+            // 
+            // labelOperation
+            // 
+            this.labelOperation.AutoSize = true;
+            this.labelOperation.Location = new System.Drawing.Point(147, 86);
+            this.labelOperation.Name = "labelOperation";
+            this.labelOperation.Size = new System.Drawing.Size(0, 16);
+            this.labelOperation.TabIndex = 12;
+            // 
+            // labelId
+            // 
+            this.labelId.AutoSize = true;
+            this.labelId.Location = new System.Drawing.Point(147, 57);
+            this.labelId.Name = "labelId";
+            this.labelId.Size = new System.Drawing.Size(0, 16);
+            this.labelId.TabIndex = 11;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(17, 117);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(102, 16);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Programador:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(17, 86);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(87, 16);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Operacion: ";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(17, 28);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(124, 16);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Tiempo restante:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(17, 57);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(98, 16);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "ID Programa:";
+            // 
             // processTimertxt
             // 
             this.processTimertxt.AutoSize = true;
-            this.processTimertxt.Location = new System.Drawing.Point(147, 28);
+            this.processTimertxt.Location = new System.Drawing.Point(157, 28);
             this.processTimertxt.Name = "processTimertxt";
             this.processTimertxt.Size = new System.Drawing.Size(55, 16);
             this.processTimertxt.TabIndex = 6;
             this.processTimertxt.Text = "00:00:00";
             this.processTimertxt.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(28, 383);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(91, 16);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Tiempo Total:";
             // 
             // btnStart
             // 
@@ -274,96 +380,24 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
-            // label1
+            // _contLoteslbl
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(28, 383);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 16);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Tiempo Total:";
+            this._contLoteslbl.AutoSize = true;
+            this._contLoteslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._contLoteslbl.Location = new System.Drawing.Point(17, 143);
+            this._contLoteslbl.Name = "_contLoteslbl";
+            this._contLoteslbl.Size = new System.Drawing.Size(117, 16);
+            this._contLoteslbl.TabIndex = 14;
+            this._contLoteslbl.Text = "Lotes restantes:";
             // 
-            // label2
+            // _contLotesOutput
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(17, 28);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(124, 16);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "Tiempo restante:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(17, 57);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(98, 16);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "ID Programa:";
-            // 
-            // groupBoxInProgress
-            // 
-            this.groupBoxInProgress.Controls.Add(this.labelProgrammerName);
-            this.groupBoxInProgress.Controls.Add(this.labelOperation);
-            this.groupBoxInProgress.Controls.Add(this.labelId);
-            this.groupBoxInProgress.Controls.Add(this.label5);
-            this.groupBoxInProgress.Controls.Add(this.label4);
-            this.groupBoxInProgress.Controls.Add(this.label2);
-            this.groupBoxInProgress.Controls.Add(this.label3);
-            this.groupBoxInProgress.Controls.Add(this.processTimertxt);
-            this.groupBoxInProgress.Location = new System.Drawing.Point(8, 193);
-            this.groupBoxInProgress.Name = "groupBoxInProgress";
-            this.groupBoxInProgress.Size = new System.Drawing.Size(365, 181);
-            this.groupBoxInProgress.TabIndex = 10;
-            this.groupBoxInProgress.TabStop = false;
-            this.groupBoxInProgress.Text = "Proceso en ejecución";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(17, 86);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(87, 16);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Operacion: ";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(17, 117);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(102, 16);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Programador:";
-            // 
-            // labelId
-            // 
-            this.labelId.AutoSize = true;
-            this.labelId.Location = new System.Drawing.Point(147, 57);
-            this.labelId.Name = "labelId";
-            this.labelId.Size = new System.Drawing.Size(0, 16);
-            this.labelId.TabIndex = 11;
-            // 
-            // labelOperation
-            // 
-            this.labelOperation.AutoSize = true;
-            this.labelOperation.Location = new System.Drawing.Point(147, 86);
-            this.labelOperation.Name = "labelOperation";
-            this.labelOperation.Size = new System.Drawing.Size(0, 16);
-            this.labelOperation.TabIndex = 12;
-            // 
-            // labelProgrammerName
-            // 
-            this.labelProgrammerName.AutoSize = true;
-            this.labelProgrammerName.Location = new System.Drawing.Point(147, 117);
-            this.labelProgrammerName.Name = "labelProgrammerName";
-            this.labelProgrammerName.Size = new System.Drawing.Size(0, 16);
-            this.labelProgrammerName.TabIndex = 13;
+            this._contLotesOutput.AutoSize = true;
+            this._contLotesOutput.Location = new System.Drawing.Point(160, 142);
+            this._contLotesOutput.Name = "_contLotesOutput";
+            this._contLotesOutput.Size = new System.Drawing.Size(14, 16);
+            this._contLotesOutput.TabIndex = 15;
+            this._contLotesOutput.Text = "0";
             // 
             // input_window
             // 
@@ -418,6 +452,9 @@
         private System.Windows.Forms.Label labelProgrammerName;
         private System.Windows.Forms.Label labelOperation;
         private System.Windows.Forms.Label labelId;
+        private System.Windows.Forms.ListView listViewPastProcesses;
+        private System.Windows.Forms.Label _contLoteslbl;
+        private System.Windows.Forms.Label _contLotesOutput;
     }
 }
 
