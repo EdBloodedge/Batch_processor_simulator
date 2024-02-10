@@ -20,8 +20,9 @@ namespace Practica1
 {
     public partial class input_window : Form
     {
-        Queue<Proceso> _Procesos = new Queue<Proceso>();
-        System.Timers.Timer _GlobalTimer;
+        Queue<Proceso> _Procesos = new Queue<Proceso>();//Se crea la lista de procesos
+        Queue<GroupBox> _display_options = new Queue<GroupBox>();//Se crea la lista para las opciones de barras
+        Queue<GroupBox> _display_options_used = new Queue<GroupBox>();//Se crea la lista para las barras en uso
         int _lotesCont = 0;
         Queue<Label> labelsUsed = new Queue<Label>();
         int contLabelToBeUsed = 0;
@@ -36,36 +37,39 @@ namespace Practica1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            _GlobalTimer = new System.Timers.Timer();
-            _GlobalTimer.Elapsed += new System.Timers.ElapsedEventHandler(_GlobalTimer_Elapsed);
-            
-            _GlobalTimer.Interval = 100;   //here you can set your interval
+           
+            _display_options.Enqueue(groupBox1);
+            _display_options.Enqueue(groupBox2);
+            _display_options.Enqueue(groupBox3);
+            _display_options.Enqueue(groupBox4);
+            //Se agregan las 4 opciones a la cola
+            labelsUsed.Enqueue(labelId);
+            labelsUsed.Enqueue(labelOperation);
+            labelsUsed.Enqueue(labelProgrammerName);
+            labelsUsed.Enqueue(_contLotesOutput);
+            labelsUsed.Enqueue(timeTxt);
 
         }
-        
-        void _GlobalTimer_Elapsed(object sender, ElapsedEventArgs e)//Esta es la parte del reloj
+
+
+        void globalTimer()
         {
-            Invoke(new Action(() =>
+            s += 1;
+            if (s == 60)
             {
-                s += 1;
-                if(s==60)
-                {
-                    s = 0;
-                    m += 1;
-                }
-                else if(m==60)
-                {
-                    m = 0;
-                    h += 1;
-                }
-                timeTxt.Text = string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0'));
+                s = 0;
+                m += 1;
             }
-            ));
+            else if (m == 60)
+            {
+                m = 0;
+                h += 1;
+            }
         }
-        
+
         private void addBtn(object sender, EventArgs e)
         {
-            if(_Procesos.Count==0)
+            if (_Procesos.Count == 0)
             {
                 _lotesCont++;
             }
@@ -76,24 +80,30 @@ namespace Practica1
             newProcess.opName = textBoxOp.Text;
             newProcess.id = textBoxId.Text;
             _Procesos.Enqueue(newProcess);
-            if(_Procesos.Count%4==0)
+            if (_Procesos.Count % 4 == 0)
             {
                 _lotesCont++;
             }
             //Aquí les recomiendo que hagan la parte de validación y la parte de agregar los procesos a la cola de procesos
         }
+        //Funcion para hacer operaciones dentro de un string
         public static string Evaluate(string expression)
         {
-            DataTable table = new DataTable();
-            table.Columns.Add("expression", typeof(string), expression);
-            DataRow row = table.NewRow();
-            table.Rows.Add(row);
-            return (string)row["expression"];
+            if (expression != "")
+            {
+                DataTable table = new DataTable();
+                table.Columns.Add("expression", typeof(string), expression);
+                DataRow row = table.NewRow();
+                table.Rows.Add(row);
+                return (string)row["expression"];
+            }
+            return expression;
+
         }
 
         private void input_window_FormClosed(object sender, FormClosedEventArgs e)
         {
-            
+
             Application.DoEvents();
         }
         private void reSize(GroupBox b, int amount)//Funcion para cambiar el tamaño de las barras
@@ -115,42 +125,25 @@ namespace Practica1
                 _Processes.Enqueue(new Proceso());
                 _Processes.ElementAt(i).TimeMax = random.Next(10, 20);      //.First.TimeMax = random.Next(10, 20);
             }
-            
+
 
         }
         private async void FCFSSchedulling()
-        {
-            //Se crea la lista de procesos
-            Queue<GroupBox> _display_options_used = new Queue<GroupBox>();//Se crea la lista para las barras en uso
-            Queue<GroupBox> _display_options = new Queue<GroupBox>();//Se crea la lista para las opciones de barras
+        {        
             int initialValue = 0;
             //FillList(_Procesos);
             stop = false;
             // Se meten las barras de la UI a una cola 
             #region Agrupamiento de Barras 
-            
-            
-            //
-            //Se agregan las 4 opciones a la cola
-            labelsUsed.Enqueue(labelId);
-            labelsUsed.Enqueue(labelOperation);
-            labelsUsed.Enqueue(labelProgrammerName);
-            labelsUsed.Enqueue(_contLotesOutput);
-
-            _display_options.Enqueue(groupBox1);
-            _display_options.Enqueue(groupBox2);
-            _display_options.Enqueue(groupBox3);
-            _display_options.Enqueue(groupBox4);
             //Comienza el timer global, no sé si estaria mejor en otra parte :/
-            _GlobalTimer.Start();
-            while (_Procesos.Count !=0)
+            while (_Procesos.Count != 0)
             {
-                for(int i=0; i<_Procesos.Count; i++)// Se ajustan los tamaños de las barras dependiendo de cuantas necesitemos
+                for (int i = 0; i < _Procesos.Count; i++)// Se ajustan los tamaños de las barras dependiendo de cuantas necesitemos
                 {
                     _display_options_used.Enqueue(_display_options.ElementAt(i));
-                    reSize(_display_options_used.ElementAt(i), _Procesos.ElementAt(i).TimeMax * 10+10);
-                    
-                    if (i == _count-1)
+                    reSize(_display_options_used.ElementAt(i), _Procesos.ElementAt(i).TimeMax * 10 + 10);
+
+                    if (i == _count - 1)
                     {
                         break;
                     }
@@ -162,10 +155,10 @@ namespace Practica1
                 //eventualmente
                 while (_display_options_used.Count != 0)//Se verifica que todavia tenemos procesos en la cola
                 {
-                    if(processStart)
+                    if (processStart)
 
                     {
-                        
+
                         contLabelToBeUsed = 0;
                         ProcessInfo(_Procesos.ElementAt(0).id);
                         contLabelToBeUsed = 1;
@@ -173,9 +166,10 @@ namespace Practica1
                         contLabelToBeUsed = 2;
                         ProcessInfo(_Procesos.ElementAt(0).Name);
                         initialValue = _Procesos.ElementAt(0).TimeMax;
+                        SetText(initialValue.ToString());
                         processStart = false;
                     }
-                    
+
                     #region Datos de Proceso
                     //Esta es la parte donde eventualmente vamos a modificar los labels(Por hacer)
                     // if (_Processes.Count > 0)
@@ -191,7 +185,6 @@ namespace Practica1
                         _display_options_used.First().BackColor = Color.Red;//El proceso actual se pone en rojo
 
 
-
                         if (_display_options_used.Count > 1)
                         {
                             // Si hay más de un proceso por terminar entonces se pone a el siguiente en azul
@@ -203,25 +196,27 @@ namespace Practica1
                         await Task.Run(() =>
                         {
                             Thread.Sleep(100);
+                            globalTimer();
                             initialValue--;
+                            contLabelToBeUsed = 4;
+                            ProcessInfo(string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')));
                             SetText(initialValue.ToString());
+                           
                             //Para motivos de pruebas lo tengo en 100 pero deberia ser 1000 <---
                         });
                     }//Si si se termino la quitamos tanto en la lista de los procesos como en la cola de las barras
                     else
                     {
                         //Pasar a otra lista primero
-                       
+
                         _display_options_used.ElementAt(0).BackColor = Color.DimGray;
                         _display_options_used.Dequeue();
                         SetList(_Procesos.Dequeue());
                         processStart = true;
-                        
-                        
                     }
                     #endregion
                 }
-                
+
                 if (_Procesos.Count == 0)//Validamos que se necesita seguir con la ejecución 
                 {
                     _lotesCont--;
@@ -230,18 +225,14 @@ namespace Practica1
                     stop = true;
                     break;
                 }
-                
-                _lotesCont--;
 
+                _lotesCont--;
             }
             stop = true;
-            //Se detiene el global
-            _GlobalTimer.Stop();
-            h = 0;
-            s = 0;
-            m = 0;
-        }
 
+        }
+   
+        
         private void label2_Click(object sender, EventArgs e)
         {
 
@@ -252,10 +243,19 @@ namespace Practica1
             // Se comienzan tanto el moviemieto de las barras como en reloj
             if(stop)
             {
+                //Se resetea el reloj global
+                h = 0;
+                s = 0;
+                m = 0;
                 Thread _ThreadProcesses = new Thread(new ThreadStart(FCFSSchedulling));
+                reSize(_display_options.ElementAt(0), 150);
+                reSize(_display_options.ElementAt(1), 150);
+                reSize(_display_options.ElementAt(2), 150);
+                reSize(_display_options.ElementAt(3), 150);
                 _ThreadProcesses.Start();
+                ClearList();
                 //Thread setProcessTimer = new Thread(new ThreadStart(processTimerset));
-                
+
             }
             
             
@@ -263,9 +263,24 @@ namespace Practica1
         }
         delegate void SetTextCallback(string text);
         delegate void SetListCallback(Proceso text);
+        delegate void ClearListCallback();
         delegate void ProcessInfoCallback(string text);
-        
 
+        private void ClearList()
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.listViewPastProcesses.InvokeRequired)
+            {
+                ClearListCallback d = new ClearListCallback(ClearList);
+                this.Invoke(d, new object[] {  });
+            }
+            else
+            {
+                this.listViewPastProcesses.Clear();
+            }
+        }
         private void SetText(string text)
         {
             // InvokeRequired required compares the thread ID of the

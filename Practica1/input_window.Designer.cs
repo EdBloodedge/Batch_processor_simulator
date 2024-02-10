@@ -43,6 +43,8 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.listViewPastProcesses = new System.Windows.Forms.ListView();
             this.groupBoxInProgress = new System.Windows.Forms.GroupBox();
+            this._contLotesOutput = new System.Windows.Forms.Label();
+            this._contLoteslbl = new System.Windows.Forms.Label();
             this.labelProgrammerName = new System.Windows.Forms.Label();
             this.labelOperation = new System.Windows.Forms.Label();
             this.labelId = new System.Windows.Forms.Label();
@@ -58,8 +60,6 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this._contLoteslbl = new System.Windows.Forms.Label();
-            this._contLotesOutput = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -213,9 +213,9 @@
             // listViewPastProcesses
             // 
             this.listViewPastProcesses.HideSelection = false;
-            this.listViewPastProcesses.Location = new System.Drawing.Point(539, 6);
+            this.listViewPastProcesses.Location = new System.Drawing.Point(489, 6);
             this.listViewPastProcesses.Name = "listViewPastProcesses";
-            this.listViewPastProcesses.Size = new System.Drawing.Size(233, 368);
+            this.listViewPastProcesses.Size = new System.Drawing.Size(283, 368);
             this.listViewPastProcesses.TabIndex = 11;
             this.listViewPastProcesses.UseCompatibleStateImageBehavior = false;
             // 
@@ -237,6 +237,25 @@
             this.groupBoxInProgress.TabIndex = 10;
             this.groupBoxInProgress.TabStop = false;
             this.groupBoxInProgress.Text = "Proceso en ejecución";
+            // 
+            // _contLotesOutput
+            // 
+            this._contLotesOutput.AutoSize = true;
+            this._contLotesOutput.Location = new System.Drawing.Point(160, 142);
+            this._contLotesOutput.Name = "_contLotesOutput";
+            this._contLotesOutput.Size = new System.Drawing.Size(14, 16);
+            this._contLotesOutput.TabIndex = 15;
+            this._contLotesOutput.Text = "0";
+            // 
+            // _contLoteslbl
+            // 
+            this._contLoteslbl.AutoSize = true;
+            this._contLoteslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._contLoteslbl.Location = new System.Drawing.Point(17, 143);
+            this._contLoteslbl.Name = "_contLoteslbl";
+            this._contLoteslbl.Size = new System.Drawing.Size(117, 16);
+            this._contLoteslbl.TabIndex = 14;
+            this._contLoteslbl.Text = "Lotes restantes:";
             // 
             // labelProgrammerName
             // 
@@ -379,25 +398,6 @@
             this.groupBox1.Size = new System.Drawing.Size(23, 169);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            // 
-            // _contLoteslbl
-            // 
-            this._contLoteslbl.AutoSize = true;
-            this._contLoteslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._contLoteslbl.Location = new System.Drawing.Point(17, 143);
-            this._contLoteslbl.Name = "_contLoteslbl";
-            this._contLoteslbl.Size = new System.Drawing.Size(117, 16);
-            this._contLoteslbl.TabIndex = 14;
-            this._contLoteslbl.Text = "Lotes restantes:";
-            // 
-            // _contLotesOutput
-            // 
-            this._contLotesOutput.AutoSize = true;
-            this._contLotesOutput.Location = new System.Drawing.Point(160, 142);
-            this._contLotesOutput.Name = "_contLotesOutput";
-            this._contLotesOutput.Size = new System.Drawing.Size(14, 16);
-            this._contLotesOutput.TabIndex = 15;
-            this._contLotesOutput.Text = "0";
             // 
             // input_window
             // 
