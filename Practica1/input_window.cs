@@ -24,6 +24,7 @@ namespace Practica1
         Queue<GroupBox> _display_options = new Queue<GroupBox>();//Se crea la lista para las opciones de barras
         Queue<GroupBox> _display_options_used = new Queue<GroupBox>();//Se crea la lista para las barras en uso
         int _lotesCont = 0;
+        int longProcess = 0;
         Queue<Label> labelsUsed = new Queue<Label>();
         int contLabelToBeUsed = 0;
         bool processStart = true;
@@ -37,11 +38,21 @@ namespace Practica1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
+            //listViewPastProcesses.Scrollable = true;
+            //listViewPastProcesses.View = View.Details;
+            //ColumnHeader c = new ColumnHeader();
+            //c.Text = "";
+            //c.Name = "col1";
+            //listViewPastProcesses.Columns.Add(c);
             _display_options.Enqueue(groupBox1);
             _display_options.Enqueue(groupBox2);
             _display_options.Enqueue(groupBox3);
             _display_options.Enqueue(groupBox4);
+            foreach(GroupBox box in  _display_options)
+            {
+                reSize(box, 15 * 10 + 10);
+            }
+            
             //Se agregan las 4 opciones a la cola
             labelsUsed.Enqueue(labelId);
             labelsUsed.Enqueue(labelOperation);
@@ -74,7 +85,6 @@ namespace Practica1
                 _lotesCont++;
             }
             Proceso newProcess = new Proceso();
-
             newProcess.Name = textBoxProgrammerName.Text;
             newProcess.TimeMax = int.Parse(textBoxTimeMax.Text);
             newProcess.opName = textBoxOp.Text;
@@ -108,7 +118,9 @@ namespace Practica1
         }
         private void reSize(GroupBox b, int amount)//Funcion para cambiar el tamaño de las barras
         {
+            
             b.Invoke((MethodInvoker)(() => b.Size = new Size(b.Size.Width, amount)));
+            
         }
         private void setText(Label l, String s)//Funcion para facilitar los ajustes de los labels
         {
@@ -131,23 +143,32 @@ namespace Practica1
         private async void FCFSSchedulling()
         {        
             int initialValue = 0;
-            //FillList(_Procesos);
             stop = false;
-            // Se meten las barras de la UI a una cola 
             #region Agrupamiento de Barras 
             //Comienza el timer global, no sé si estaria mejor en otra parte :/
             while (_Procesos.Count != 0)
             {
                 for (int i = 0; i < _Procesos.Count; i++)// Se ajustan los tamaños de las barras dependiendo de cuantas necesitemos
                 {
+                    
                     _display_options_used.Enqueue(_display_options.ElementAt(i));
-                    reSize(_display_options_used.ElementAt(i), _Procesos.ElementAt(i).TimeMax * 10 + 10);
+                    if (_Procesos.ElementAt(i).TimeMax > 15)
+                    {
+                        //longProcess = true;
+                        reSize(_display_options_used.ElementAt(i),15 * 10 + 10);
+                    }
+                    else
+                    {
+                        reSize(_display_options_used.ElementAt(i), _Procesos.ElementAt(i).TimeMax * 10 + 10);
+                    }
+                    
 
                     if (i == _count - 1)
                     {
                         break;
                     }
                 }
+                
                 #endregion
                 contLabelToBeUsed = 3;
                 ProcessInfo(_lotesCont.ToString());
@@ -158,7 +179,7 @@ namespace Practica1
                     if (processStart)
 
                     {
-
+                        
                         contLabelToBeUsed = 0;
                         ProcessInfo(_Procesos.ElementAt(0).id);
                         contLabelToBeUsed = 1;
@@ -166,17 +187,15 @@ namespace Practica1
                         contLabelToBeUsed = 2;
                         ProcessInfo(_Procesos.ElementAt(0).Name);
                         initialValue = _Procesos.ElementAt(0).TimeMax;
+
+                        longProcess = initialValue / 15+1;
+                        
+
                         SetText(initialValue.ToString());
                         processStart = false;
                     }
 
-                    #region Datos de Proceso
-                    //Esta es la parte donde eventualmente vamos a modificar los labels(Por hacer)
-                    // if (_Processes.Count > 0)
-                    //{
-                    //    setText(LNameFCFS, "Nombre Proceso FCFS:" + _Processes.First().Name);
-                    //}
-                    #endregion
+
 
                     #region EstiloDeBarras
 
@@ -208,11 +227,27 @@ namespace Practica1
                     else
                     {
                         //Pasar a otra lista primero
-
-                        _display_options_used.ElementAt(0).BackColor = Color.DimGray;
-                        _display_options_used.Dequeue();
-                        SetList(_Procesos.Dequeue());
-                        processStart = true;
+                        if(longProcess>1)
+                        {
+                            longProcess--;
+                            if (initialValue > 15)
+                            {
+                                reSize(_display_options_used.ElementAt(0), 15 * 10 + 10);
+                                
+                            }
+                            else
+                            {
+                                reSize(_display_options_used.ElementAt(0), initialValue * 10 + 10);
+                            }
+                        }
+                        else
+                        {
+                            _display_options_used.ElementAt(0).BackColor = Color.DimGray;
+                            _display_options_used.Dequeue();
+                            SetList(_Procesos.Dequeue());
+                            processStart = true;
+                        }
+                        
                     }
                     #endregion
                 }
@@ -308,7 +343,9 @@ namespace Practica1
             }
             else
             {
+                
                 string[] row1 = { "s1", "s2", "s3" };
+                //listViewPastProcesses.
                 listViewPastProcesses.Items.Add(proceso.Name).SubItems.AddRange(row1);
                 listViewPastProcesses.Items.Add(Evaluate(proceso.opName)).SubItems.AddRange(row1);
                 listViewPastProcesses.Items.Add(proceso.id).SubItems.AddRange(row1);

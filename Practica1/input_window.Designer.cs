@@ -193,6 +193,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.BackColor = System.Drawing.Color.SeaShell;
             this.tabPage2.Controls.Add(this.listViewPastProcesses);
             this.tabPage2.Controls.Add(this.groupBoxInProgress);
             this.tabPage2.Controls.Add(this.label1);
@@ -208,12 +209,12 @@
             this.tabPage2.Size = new System.Drawing.Size(793, 421);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Procesos";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // listViewPastProcesses
             // 
+            this.listViewPastProcesses.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewPastProcesses.HideSelection = false;
-            this.listViewPastProcesses.Location = new System.Drawing.Point(489, 6);
+            this.listViewPastProcesses.Location = new System.Drawing.Point(451, 6);
             this.listViewPastProcesses.Name = "listViewPastProcesses";
             this.listViewPastProcesses.Size = new System.Drawing.Size(283, 368);
             this.listViewPastProcesses.TabIndex = 11;
@@ -221,6 +222,8 @@
             // 
             // groupBoxInProgress
             // 
+            this.groupBoxInProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBoxInProgress.BackColor = System.Drawing.Color.Transparent;
             this.groupBoxInProgress.Controls.Add(this._contLotesOutput);
             this.groupBoxInProgress.Controls.Add(this._contLoteslbl);
             this.groupBoxInProgress.Controls.Add(this.labelProgrammerName);
@@ -325,15 +328,16 @@
             // processTimertxt
             // 
             this.processTimertxt.AutoSize = true;
-            this.processTimertxt.Location = new System.Drawing.Point(157, 28);
+            this.processTimertxt.Location = new System.Drawing.Point(160, 28);
             this.processTimertxt.Name = "processTimertxt";
-            this.processTimertxt.Size = new System.Drawing.Size(55, 16);
+            this.processTimertxt.Size = new System.Drawing.Size(14, 16);
             this.processTimertxt.TabIndex = 6;
-            this.processTimertxt.Text = "00:00:00";
+            this.processTimertxt.Text = "0";
             this.processTimertxt.Click += new System.EventHandler(this.label2_Click);
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(28, 383);
             this.label1.Name = "label1";
@@ -343,6 +347,7 @@
             // 
             // btnStart
             // 
+            this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnStart.Location = new System.Drawing.Point(248, 380);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
@@ -353,11 +358,12 @@
             // 
             // timeTxt
             // 
+            this.timeTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.timeTxt.AutoSize = true;
-            this.timeTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.timeTxt.Location = new System.Drawing.Point(125, 377);
+            this.timeTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.timeTxt.Location = new System.Drawing.Point(125, 383);
             this.timeTxt.Name = "timeTxt";
-            this.timeTxt.Size = new System.Drawing.Size(80, 22);
+            this.timeTxt.Size = new System.Drawing.Size(55, 16);
             this.timeTxt.TabIndex = 4;
             this.timeTxt.Text = "00:00:00";
             this.timeTxt.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -368,7 +374,7 @@
             this.groupBox4.BackColor = System.Drawing.Color.DimGray;
             this.groupBox4.Location = new System.Drawing.Point(182, 6);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(23, 169);
+            this.groupBox4.Size = new System.Drawing.Size(23, 160);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             // 
@@ -377,7 +383,7 @@
             this.groupBox3.BackColor = System.Drawing.Color.DimGray;
             this.groupBox3.Location = new System.Drawing.Point(132, 6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(23, 169);
+            this.groupBox3.Size = new System.Drawing.Size(23, 160);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             // 
@@ -386,7 +392,7 @@
             this.groupBox2.BackColor = System.Drawing.Color.DimGray;
             this.groupBox2.Location = new System.Drawing.Point(80, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(23, 169);
+            this.groupBox2.Size = new System.Drawing.Size(23, 160);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             // 
@@ -395,7 +401,7 @@
             this.groupBox1.BackColor = System.Drawing.Color.DimGray;
             this.groupBox1.Location = new System.Drawing.Point(28, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(23, 169);
+            this.groupBox1.Size = new System.Drawing.Size(23, 160);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -403,7 +409,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tabControl1);
             this.Name = "input_window";
