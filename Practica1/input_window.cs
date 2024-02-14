@@ -35,15 +35,18 @@ namespace Practica1
         {
             InitializeComponent();
         }
-
+        public enum _labelsUsedEnum : int //Enum que corresponde a los labels que utilizamos en la cola de los labels
+        {
+            id,
+            operation,
+            programmerName,
+            lotesOutput,
+            time,
+            errores
+            
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
-            //listViewPastProcesses.Scrollable = true;
-            //listViewPastProcesses.View = View.Details;
-            //ColumnHeader c = new ColumnHeader();
-            //c.Text = "";
-            //c.Name = "col1";
-            //listViewPastProcesses.Columns.Add(c);
             _display_options.Enqueue(groupBox1);
             _display_options.Enqueue(groupBox2);
             _display_options.Enqueue(groupBox3);
@@ -59,10 +62,12 @@ namespace Practica1
             labelsUsed.Enqueue(labelProgrammerName);
             labelsUsed.Enqueue(_contLotesOutput);
             labelsUsed.Enqueue(timeTxt);
+            labelsUsed.Enqueue(labelProcesosInput);
+            
 
         }
 
-
+        //Contador global
         void globalTimer()
         {
             s += 1;
@@ -85,29 +90,58 @@ namespace Practica1
                 _lotesCont++;
             }
             Proceso newProcess = new Proceso();
-            newProcess.Name = textBoxProgrammerName.Text;
-            newProcess.TimeMax = int.Parse(textBoxTimeMax.Text);
-            newProcess.opName = textBoxOp.Text;
-            newProcess.id = textBoxId.Text;
-            _Procesos.Enqueue(newProcess);
-            if (_Procesos.Count % 4 == 0)
+            try
             {
-                _lotesCont++;
+                if (textBoxProgrammerName.Text == "")
+                {
+                    MessageBox.Show("Se necesita escribir un Nombre", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                newProcess.Name = textBoxProgrammerName.Text;
+                newProcess.TimeMax = int.Parse(textBoxTimeMax.Text);
+                newProcess.opName = Evaluate(textBoxOp.Text);
+                // Validamos que no haya ids repetidos
+                foreach (Proceso p in _Procesos)
+                {
+                    if (p.id == textBoxId.Text)
+                    {
+                        MessageBox.Show("Id repetido", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                //Validamos que si se haya escrito el nombre de programador
+                
+                newProcess.id = textBoxId.Text;
+                _Procesos.Enqueue(newProcess);
+                if (_Procesos.Count % 4 == 0)
+                {
+                    _lotesCont++;
+                }
+                contLabelToBeUsed = (int)_labelsUsedEnum.errores;
+                processInfo("Proceso: " + (_Procesos.Count + 1));
             }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Datos incorrectos", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+           
+          
             //Aquí les recomiendo que hagan la parte de validación y la parte de agregar los procesos a la cola de procesos
         }
         //Funcion para hacer operaciones dentro de un string
         public static string Evaluate(string expression)
         {
-            if (expression != "")
-            {
-                DataTable table = new DataTable();
-                table.Columns.Add("expression", typeof(string), expression);
-                DataRow row = table.NewRow();
-                table.Rows.Add(row);
-                return (string)row["expression"];
-            }
-            return expression;
+            
+            DataTable table = new DataTable();
+            table.Columns.Add("expression", typeof(string), expression);
+            DataRow row = table.NewRow();
+            table.Rows.Add(row);
+            return (string)row["expression"];
+            
+            
 
         }
 
@@ -144,8 +178,8 @@ namespace Practica1
         {        
             int initialValue = 0;
             stop = false;
-            #region Agrupamiento de Barras 
-            //Comienza el timer global, no sé si estaria mejor en otra parte :/
+            #region Ejecución de procesos
+            
             while (_Procesos.Count != 0)
             {
                 for (int i = 0; i < _Procesos.Count; i++)// Se ajustan los tamaños de las barras dependiendo de cuantas necesitemos
@@ -170,8 +204,8 @@ namespace Practica1
                 }
                 
                 #endregion
-                contLabelToBeUsed = 3;
-                ProcessInfo(_lotesCont.ToString());
+                contLabelToBeUsed = (int)_labelsUsedEnum.lotesOutput;
+                processInfo(_lotesCont.ToString());
                 // Se verifica que el numero de procesos sea igual al numero de procesos deseado, esto se tiene que modificar
                 //eventualmente
                 while (_display_options_used.Count != 0)//Se verifica que todavia tenemos procesos en la cola
@@ -180,12 +214,12 @@ namespace Practica1
 
                     {
                         
-                        contLabelToBeUsed = 0;
-                        ProcessInfo(_Procesos.ElementAt(0).id);
-                        contLabelToBeUsed = 1;
-                        ProcessInfo(_Procesos.ElementAt(0).opName);
-                        contLabelToBeUsed = 2;
-                        ProcessInfo(_Procesos.ElementAt(0).Name);
+                        contLabelToBeUsed = (int)_labelsUsedEnum.id;
+                        processInfo(_Procesos.ElementAt(0).id);
+                        contLabelToBeUsed = (int)_labelsUsedEnum.operation;
+                        processInfo(_Procesos.ElementAt(0).opName);
+                        contLabelToBeUsed = (int)_labelsUsedEnum.programmerName;
+                        processInfo(_Procesos.ElementAt(0).Name);
                         initialValue = _Procesos.ElementAt(0).TimeMax;
 
                         longProcess = initialValue / 15+1;
@@ -217,8 +251,8 @@ namespace Practica1
                             Thread.Sleep(100);
                             globalTimer();
                             initialValue--;
-                            contLabelToBeUsed = 4;
-                            ProcessInfo(string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')));
+                            contLabelToBeUsed = (int)_labelsUsedEnum.time;
+                            processInfo(string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')));
                             SetText(initialValue.ToString());
                            
                             //Para motivos de pruebas lo tengo en 100 pero deberia ser 1000 <---
@@ -255,8 +289,8 @@ namespace Practica1
                 if (_Procesos.Count == 0)//Validamos que se necesita seguir con la ejecución 
                 {
                     _lotesCont--;
-                    contLabelToBeUsed = 3;
-                    ProcessInfo(_lotesCont.ToString());
+                    contLabelToBeUsed = (int)_labelsUsedEnum.time;
+                    processInfo(_lotesCont.ToString());
                     stop = true;
                     break;
                 }
@@ -303,9 +337,7 @@ namespace Practica1
 
         private void ClearList()
         {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
+            
             if (this.listViewPastProcesses.InvokeRequired)
             {
                 ClearListCallback d = new ClearListCallback(ClearList);
@@ -318,9 +350,7 @@ namespace Practica1
         }
         private void SetText(string text)
         {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
+            
             if (this.processTimertxt.InvokeRequired)
             {
                 SetTextCallback d = new SetTextCallback(SetText);
@@ -331,11 +361,10 @@ namespace Practica1
                 this.processTimertxt.Text = text;
             }
         }
+        //funcion para cambiar el ViewList de los procesos anteriores
         private void SetList(Proceso proceso)
         {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
+            
             if (this.listViewPastProcesses.InvokeRequired)
             {
                 SetListCallback d = new SetListCallback(SetList);
@@ -347,23 +376,21 @@ namespace Practica1
                 string[] row1 = { "s1", "s2", "s3" };
                 //listViewPastProcesses.
                 listViewPastProcesses.Items.Add(proceso.Name).SubItems.AddRange(row1);
-                listViewPastProcesses.Items.Add(Evaluate(proceso.opName)).SubItems.AddRange(row1);
+                listViewPastProcesses.Items.Add(proceso.opName).SubItems.AddRange(row1);
                 listViewPastProcesses.Items.Add(proceso.id).SubItems.AddRange(row1);
                 listViewPastProcesses.Items.Add(proceso.TimeMax.ToString()).SubItems.AddRange(row1);
-                //this.listViewPastProcesses.Items.Add("Column1Text").SubItems.AddRange("","","");
-                //this.listViewPastProcesses.Items.Add(proceso);
             }
         }
 
 
-        private void ProcessInfo(string text) //Función para cambiar los datos de cualquier label, sin tener qué hacer una por cada label.
+        private void processInfo(string text) //Función para cambiar los datos de cualquier label, sin tener qué hacer una por cada label.
         {
 
             
 
             if (this.InvokeRequired)
             {
-                ProcessInfoCallback d = new ProcessInfoCallback(ProcessInfo);
+                ProcessInfoCallback d = new ProcessInfoCallback(processInfo);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -380,7 +407,7 @@ namespace Practica1
 
         private void processTimerset()
         {
-            //processTimertxt.Text = initialValue.ToString();
+
         }
 
         private void label6_Click(object sender, EventArgs e)
