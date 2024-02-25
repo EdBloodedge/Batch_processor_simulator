@@ -13,7 +13,7 @@ using System.Timers;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-
+//Practica 2
 
 
 namespace Practica1
@@ -21,6 +21,7 @@ namespace Practica1
     public partial class input_window : Form
     {
         Queue<Proceso> _Procesos = new Queue<Proceso>();//Se crea la lista de procesos
+        Queue<Proceso> _lotes = new Queue<Proceso>();
         Queue<GroupBox> _display_options = new Queue<GroupBox>();//Se crea la lista para las opciones de barras
         Queue<GroupBox> _display_options_used = new Queue<GroupBox>();//Se crea la lista para las barras en uso
         int _lotesCont = 0;
@@ -29,8 +30,10 @@ namespace Practica1
         int contLabelToBeUsed = 0;
         bool processStart = true;
         bool stop = true;
+        bool interrupcion = false;
+        bool error = false;
         int h, m, s;
-        private const int _count = 4;
+        private const int _count = 3;
         public input_window()
         {
             InitializeComponent();
@@ -50,7 +53,7 @@ namespace Practica1
             _display_options.Enqueue(groupBox1);
             _display_options.Enqueue(groupBox2);
             _display_options.Enqueue(groupBox3);
-            _display_options.Enqueue(groupBox4);
+            //_display_options.Enqueue(groupBox4);
             foreach(GroupBox box in  _display_options)
             {
                 reSize(box, 15 * 10 + 10);
@@ -62,8 +65,8 @@ namespace Practica1
             labelsUsed.Enqueue(labelProgrammerName);
             labelsUsed.Enqueue(_contLotesOutput);
             labelsUsed.Enqueue(timeTxt);
-            labelsUsed.Enqueue(labelProcesosInput);
-            
+            //labelsUsed.Enqueue(labelProcesosInput);
+
 
         }
 
@@ -85,48 +88,48 @@ namespace Practica1
 
         private void addBtn(object sender, EventArgs e)
         {
-            if (_Procesos.Count == 0)
-            {
-                _lotesCont++;
-            }
-            Proceso newProcess = new Proceso();
-            try
-            {
-                if (textBoxProgrammerName.Text == "")
-                {
-                    MessageBox.Show("Se necesita escribir un Nombre", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                newProcess.Name = textBoxProgrammerName.Text;
-                newProcess.TimeMax = int.Parse(textBoxTimeMax.Text);
-                newProcess.opName = Evaluate(textBoxOp.Text);
-                // Validamos que no haya ids repetidos
-                foreach (Proceso p in _Procesos)
-                {
-                    if (p.id == textBoxId.Text)
-                    {
-                        MessageBox.Show("Id repetido", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                }
-                //Validamos que si se haya escrito el nombre de programador
+            //if (_Procesos.Count == 0)
+            //{
+            //    _lotesCont++;
+            //}
+            //Proceso newProcess = new Proceso();
+            //try
+            //{
+            //    if (textBoxProgrammerName.Text == "")
+            //    {
+            //        MessageBox.Show("Se necesita escribir un Nombre", "Error",
+            //    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        return;
+            //    }
+            //    newProcess.Name = textBoxProgrammerName.Text;
+            //    newProcess.TimeMax = int.Parse(textBoxTimeMax.Text);
+            //    newProcess.opName = Evaluate(textBoxOp.Text);
+            //    // Validamos que no haya ids repetidos
+            //    foreach (Proceso p in _Procesos)
+            //    {
+            //        if (p.id == textBoxId.Text)
+            //        {
+            //            MessageBox.Show("Id repetido", "Error",
+            //    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //            return;
+            //        }
+            //    }
+            //    //Validamos que si se haya escrito el nombre de programador
                 
-                newProcess.id = textBoxId.Text;
-                _Procesos.Enqueue(newProcess);
-                if (_Procesos.Count % 4 == 0)
-                {
-                    _lotesCont++;
-                }
-                contLabelToBeUsed = (int)_labelsUsedEnum.errores;
-                processInfo("Proceso: " + (_Procesos.Count + 1));
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show("Datos incorrectos", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //    newProcess.id = textBoxId.Text;
+            //    _Procesos.Enqueue(newProcess);
+            //    if (_Procesos.Count % 3 == 0)
+            //    {
+            //        _lotesCont++;
+            //    }
+            //    contLabelToBeUsed = (int)_labelsUsedEnum.errores;
+            //    processInfo("Proceso: " + (_Procesos.Count + 1));
+            //}
+            //catch (Exception exc)
+            //{
+            //    MessageBox.Show("Datos incorrectos", "Error",
+            //    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
            
           
             //Aquí les recomiendo que hagan la parte de validación y la parte de agregar los procesos a la cola de procesos
@@ -161,15 +164,26 @@ namespace Practica1
             l.Invoke((MethodInvoker)(() => l.Text = s));
 
         }
-        private void FillList(Queue<Proceso> _Processes) // Se añaden procesos a una lista
+        private void FillList() // Se añaden procesos a una lista
         {
             //Esta parte se debera quitar en algun momento
             Random random = new Random();
-            var max = random.Next(10, 20);
+            var max = random.Next(7, 18);
+
+            const String _operaciones = "+-/*";
+            
+
             for (int i = 0; i < max; i++)
             {
-                _Processes.Enqueue(new Proceso());
-                _Processes.ElementAt(i).TimeMax = random.Next(10, 20);      //.First.TimeMax = random.Next(10, 20);
+                _Procesos.Enqueue(new Proceso());
+                _Procesos.ElementAt(i).TimeMax = random.Next(7, 18);
+                _Procesos.ElementAt(i).id = i.ToString();
+                _Procesos.ElementAt(i).opName = ""+random.Next(0, 100) + _operaciones[random.Next(0, 3)] + random.Next(0, 100);
+                if((i)%3==0)
+                {
+                    _lotesCont++;
+                }
+
             }
 
 
@@ -179,13 +193,16 @@ namespace Practica1
             int initialValue = 0;
             stop = false;
             #region Ejecución de procesos
-            
+            FillList();
             while (_Procesos.Count != 0)
             {
+
                 for (int i = 0; i < _Procesos.Count; i++)// Se ajustan los tamaños de las barras dependiendo de cuantas necesitemos
                 {
                     
                     _display_options_used.Enqueue(_display_options.ElementAt(i));
+                    _lotes.Enqueue(_Procesos.ElementAt(i));
+                   
                     if (_Procesos.ElementAt(i).TimeMax > 15)
                     {
                         //longProcess = true;
@@ -215,12 +232,12 @@ namespace Practica1
                     {
                         
                         contLabelToBeUsed = (int)_labelsUsedEnum.id;
-                        processInfo(_Procesos.ElementAt(0).id);
+                        processInfo(_lotes.ElementAt(0).id);
                         contLabelToBeUsed = (int)_labelsUsedEnum.operation;
-                        processInfo(_Procesos.ElementAt(0).opName);
-                        contLabelToBeUsed = (int)_labelsUsedEnum.programmerName;
-                        processInfo(_Procesos.ElementAt(0).Name);
-                        initialValue = _Procesos.ElementAt(0).TimeMax;
+                        processInfo(_lotes.ElementAt(0).opName);
+                        //contLabelToBeUsed = (int)_labelsUsedEnum.programmerName;
+                        //processInfo(_Procesos.ElementAt(0).Name);
+                        initialValue = _lotes.ElementAt(0).TimeMax;
 
                         longProcess = initialValue / 15+1;
                         
@@ -229,7 +246,54 @@ namespace Practica1
                         processStart = false;
                     }
 
+                    if (interrupcion)
+                    {
+                        _lotes.Enqueue(_lotes.Dequeue());
+                        _lotes.Last().TimeMax = initialValue;
+                        contLabelToBeUsed = (int)_labelsUsedEnum.id;
+                        processInfo(_lotes.ElementAt(0).id);
+                        contLabelToBeUsed = (int)_labelsUsedEnum.operation;
+                        processInfo(_lotes.ElementAt(0).opName);
+                        initialValue = _lotes.ElementAt(0).TimeMax;
+                        longProcess = initialValue / 15 + 1;
+                        SetText(initialValue.ToString());
+                        processStart = false;
+                        if (_lotes.ElementAt(0).TimeMax > 15)
+                        {
+                            //longProcess = true;
+                            reSize(_display_options_used.ElementAt(0), 15 * 10 + 10);
+                        }
+                        else
+                        {
+                            reSize(_display_options_used.ElementAt(0), _lotes.ElementAt(0).TimeMax * 10 + 10);
+                        }
+                        if (_lotes.Last().TimeMax > 15)
+                        {
+                            //longProcess = true;
+                            reSize(_display_options_used.Last(), 15 * 10 + 10);
+                        }
+                        else
+                        {
+                            reSize(_display_options_used.Last(), _lotes.Last().TimeMax * 10 + 10);
+                        }
+                        interrupcion = false;
 
+                    }
+                    if (error)
+                    {
+                        _display_options_used.ElementAt(0).BackColor = Color.DimGray;
+                        _display_options_used.Dequeue();
+                        _lotes.ElementAt(0).id = "Terminado por error";
+                        SetList(_lotes.Dequeue());
+                        _Procesos.Dequeue();
+                        error = false;
+                        processStart = true;
+                        if(_display_options_used.Count ==0)
+                        {
+                            break;
+                        }
+
+                    }
 
                     #region EstiloDeBarras
 
@@ -257,6 +321,7 @@ namespace Practica1
                            
                             //Para motivos de pruebas lo tengo en 100 pero deberia ser 1000 <---
                         });
+                        
                     }//Si si se termino la quitamos tanto en la lista de los procesos como en la cola de las barras
                     else
                     {
@@ -278,26 +343,37 @@ namespace Practica1
                         {
                             _display_options_used.ElementAt(0).BackColor = Color.DimGray;
                             _display_options_used.Dequeue();
-                            SetList(_Procesos.Dequeue());
+                            SetList(_lotes.Dequeue());
+                            _Procesos.Dequeue();
                             processStart = true;
                         }
                         
                     }
+                    
+                    while (stop)
+                    {
+
+                    }
+                    
                     #endregion
                 }
-
+                
                 if (_Procesos.Count == 0)//Validamos que se necesita seguir con la ejecución 
                 {
                     _lotesCont--;
-                    contLabelToBeUsed = (int)_labelsUsedEnum.time;
+                    contLabelToBeUsed = (int)_labelsUsedEnum.lotesOutput;
                     processInfo(_lotesCont.ToString());
                     stop = true;
                     break;
                 }
-
+                
                 _lotesCont--;
+                
             }
+            
+            
             stop = true;
+            
 
         }
    
@@ -320,9 +396,10 @@ namespace Practica1
                 reSize(_display_options.ElementAt(0), 150);
                 reSize(_display_options.ElementAt(1), 150);
                 reSize(_display_options.ElementAt(2), 150);
-                reSize(_display_options.ElementAt(3), 150);
-                _ThreadProcesses.Start();
+                //reSize(_display_options.ElementAt(3), 150);
                 ClearList();
+                _ThreadProcesses.Start();
+               
                 //Thread setProcessTimer = new Thread(new ThreadStart(processTimerset));
 
             }
@@ -345,7 +422,7 @@ namespace Practica1
             }
             else
             {
-                this.listViewPastProcesses.Clear();
+                this.listViewPastProcesses.Items.Clear();
             }
         }
         private void SetText(string text)
@@ -372,13 +449,18 @@ namespace Practica1
             }
             else
             {
+                ListViewItem newItem = new ListViewItem(proceso.id, proceso.opName);
+                if(proceso.opName == "Terminado por error")
+                {
+                    newItem.SubItems.Add(proceso.opName);
+                }
+                else
+                {
+                    newItem.SubItems.Add(proceso.opName + "= " + Evaluate(proceso.opName));
+                }
                 
-                string[] row1 = { "s1", "s2", "s3" };
-                //listViewPastProcesses.
-                listViewPastProcesses.Items.Add(proceso.Name).SubItems.AddRange(row1);
-                listViewPastProcesses.Items.Add(proceso.opName).SubItems.AddRange(row1);
-                listViewPastProcesses.Items.Add(proceso.id).SubItems.AddRange(row1);
-                listViewPastProcesses.Items.Add(proceso.TimeMax.ToString()).SubItems.AddRange(row1);
+                newItem.SubItems.Add(proceso.TimeMax.ToString());
+                listViewPastProcesses.Items.Add(newItem);
             }
         }
 
@@ -403,6 +485,36 @@ namespace Practica1
         private void label4_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void input_window_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.P)
+            {
+                System.Console.WriteLine(" "+ e.KeyChar);
+                stop = true;
+            }
+            else if(e.KeyChar == (char)Keys.C)
+            {
+                System.Console.WriteLine(" " + e.KeyChar);
+                stop = false;
+            }
+            else if (e.KeyChar == (char)Keys.I)
+            {
+                System.Console.WriteLine(" " + e.KeyChar);
+                interrupcion = true;
+                
+            }
+            else if (e.KeyChar == (char)Keys.E)
+            {
+                System.Console.WriteLine(" " + e.KeyChar);
+                error = true;
+            }
+        }
+
+        private void tabPage2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            System.Console.WriteLine("Hola");
         }
 
         private void processTimerset()
