@@ -16,7 +16,6 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 //Practica 2
 
 
-
 namespace Practica1
 {
     public partial class input_window : Form
@@ -51,7 +50,6 @@ namespace Practica1
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-
             _display_options.Enqueue(groupBox1);
             _display_options.Enqueue(groupBox2);
             _display_options.Enqueue(groupBox3);
@@ -68,7 +66,6 @@ namespace Practica1
             labelsUsed.Enqueue(_contLotesOutput);
             labelsUsed.Enqueue(timeTxt);
             //labelsUsed.Enqueue(labelProcesosInput);
-
 
 
         }
@@ -204,7 +201,6 @@ namespace Practica1
                 {
                     
                     _display_options_used.Enqueue(_display_options.ElementAt(i));
-
                     _lotes.Enqueue(_Procesos.ElementAt(i));
                    
                     if (_Procesos.ElementAt(i).TimeMax > 15)
@@ -304,6 +300,7 @@ namespace Practica1
                     if (_display_options_used.First().Size.Height > 10)//Verificamos que la barra actual no se haya "Terminado"
                     {
                         _display_options_used.First().BackColor = Color.Red;//El proceso actual se pone en rojo
+
 
                         if (_display_options_used.Count > 1)
                         {
@@ -415,7 +412,6 @@ namespace Practica1
         delegate void ClearListCallback();
         delegate void ProcessInfoCallback(string text);
 
-
         private void ClearList()
         {
             
@@ -442,7 +438,6 @@ namespace Practica1
                 this.processTimertxt.Text = text;
             }
         }
-
         //funcion para cambiar el ViewList de los procesos anteriores
         private void SetList(Proceso proceso)
         {
@@ -478,7 +473,6 @@ namespace Practica1
             if (this.InvokeRequired)
             {
                 ProcessInfoCallback d = new ProcessInfoCallback(processInfo);
-
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -492,6 +486,7 @@ namespace Practica1
         {
 
         }
+
         private void input_window_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.P)

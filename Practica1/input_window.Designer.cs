@@ -50,15 +50,6 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.groupBoxInProgress = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.labelId = new System.Windows.Forms.Label();
-            this.labelOperation = new System.Windows.Forms.Label();
-            this.labelProgrammerName = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBoxInProgress.SuspendLayout();
@@ -80,7 +71,6 @@
             // 
             this.tabPage2.BackColor = System.Drawing.Color.SeaShell;
             this.tabPage2.Controls.Add(this.listViewPastProcesses);
-
             this.tabPage2.Controls.Add(this.groupBoxInProgress);
             this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.btnStart);
@@ -220,9 +210,7 @@
             // processTimertxt
             // 
             this.processTimertxt.AutoSize = true;
-
             this.processTimertxt.Location = new System.Drawing.Point(160, 28);
-
             this.processTimertxt.Name = "processTimertxt";
             this.processTimertxt.Size = new System.Drawing.Size(14, 16);
             this.processTimertxt.TabIndex = 6;
@@ -241,9 +229,7 @@
             // 
             // btnStart
             // 
-
             this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-
             this.btnStart.Location = new System.Drawing.Point(248, 380);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
@@ -256,10 +242,8 @@
             // 
             this.timeTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.timeTxt.AutoSize = true;
-
             this.timeTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.timeTxt.Location = new System.Drawing.Point(125, 383);
-
             this.timeTxt.Name = "timeTxt";
             this.timeTxt.Size = new System.Drawing.Size(55, 16);
             this.timeTxt.TabIndex = 4;
@@ -267,7 +251,6 @@
             this.timeTxt.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.timeTxt.Click += new System.EventHandler(this.label6_Click);
             // 
-
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.Color.DimGray;
@@ -294,97 +277,6 @@
             this.groupBox1.Size = new System.Drawing.Size(23, 160);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(28, 383);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 16);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Tiempo Total:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(17, 28);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(124, 16);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "Tiempo restante:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(17, 57);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(98, 16);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "ID Programa:";
-            // 
-            // groupBoxInProgress
-            // 
-            this.groupBoxInProgress.Controls.Add(this.labelProgrammerName);
-            this.groupBoxInProgress.Controls.Add(this.labelOperation);
-            this.groupBoxInProgress.Controls.Add(this.labelId);
-            this.groupBoxInProgress.Controls.Add(this.label5);
-            this.groupBoxInProgress.Controls.Add(this.label4);
-            this.groupBoxInProgress.Controls.Add(this.label2);
-            this.groupBoxInProgress.Controls.Add(this.label3);
-            this.groupBoxInProgress.Controls.Add(this.processTimertxt);
-            this.groupBoxInProgress.Location = new System.Drawing.Point(8, 193);
-            this.groupBoxInProgress.Name = "groupBoxInProgress";
-            this.groupBoxInProgress.Size = new System.Drawing.Size(365, 181);
-            this.groupBoxInProgress.TabIndex = 10;
-            this.groupBoxInProgress.TabStop = false;
-            this.groupBoxInProgress.Text = "Proceso en ejecución";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(17, 86);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(87, 16);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Operacion: ";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(17, 117);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(102, 16);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Programador:";
-            // 
-            // labelId
-            // 
-            this.labelId.AutoSize = true;
-            this.labelId.Location = new System.Drawing.Point(147, 57);
-            this.labelId.Name = "labelId";
-            this.labelId.Size = new System.Drawing.Size(0, 16);
-            this.labelId.TabIndex = 11;
-            // 
-            // labelOperation
-            // 
-            this.labelOperation.AutoSize = true;
-            this.labelOperation.Location = new System.Drawing.Point(147, 86);
-            this.labelOperation.Name = "labelOperation";
-            this.labelOperation.Size = new System.Drawing.Size(0, 16);
-            this.labelOperation.TabIndex = 12;
-            // 
-            // labelProgrammerName
-            // 
-            this.labelProgrammerName.AutoSize = true;
-            this.labelProgrammerName.Location = new System.Drawing.Point(147, 117);
-            this.labelProgrammerName.Name = "labelProgrammerName";
-            this.labelProgrammerName.Size = new System.Drawing.Size(0, 16);
-            this.labelProgrammerName.TabIndex = 13;
             // 
             // input_window
             // 
@@ -419,7 +311,6 @@
         private System.Windows.Forms.Label timeTxt;
         private System.Windows.Forms.Label processTimertxt;
         private System.Windows.Forms.GroupBox groupBoxInProgress;
-
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -433,7 +324,6 @@
         private System.Windows.Forms.ColumnHeader id;
         private System.Windows.Forms.ColumnHeader operacion;
         private System.Windows.Forms.ColumnHeader tiempo;
-
     }
 }
 
