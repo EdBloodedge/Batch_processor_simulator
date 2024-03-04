@@ -11,9 +11,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-//Practica 2
+//Practica 3
 
 
 namespace Practica1
@@ -24,7 +25,7 @@ namespace Practica1
         Queue<Proceso> _lotes = new Queue<Proceso>();
         Queue<GroupBox> _display_options = new Queue<GroupBox>();//Se crea la lista para las opciones de barras
         Queue<GroupBox> _display_options_used = new Queue<GroupBox>();//Se crea la lista para las barras en uso
-        int _lotesCont = 0;
+       
         int longProcess = 0;
         Queue<Label> labelsUsed = new Queue<Label>();
         int contLabelToBeUsed = 0;
@@ -45,7 +46,11 @@ namespace Practica1
             programmerName,
             lotesOutput,
             time,
-            errores
+
+            blocked1,
+            blocked2,
+            blocked3,
+            timerProcc
             
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -65,6 +70,12 @@ namespace Practica1
             labelsUsed.Enqueue(labelProgrammerName);
             labelsUsed.Enqueue(_contLotesOutput);
             labelsUsed.Enqueue(timeTxt);
+            
+            labelsUsed.Enqueue(blockedTimer1);
+            labelsUsed.Enqueue(blockedTimer2);
+            labelsUsed.Enqueue(blockedTimer3);
+            labelsUsed.Enqueue(processTimertxt);
+            
             //labelsUsed.Enqueue(labelProcesosInput);
 
 
@@ -86,54 +97,7 @@ namespace Practica1
             }
         }
 
-        private void addBtn(object sender, EventArgs e)
-        {
-            //if (_Procesos.Count == 0)
-            //{
-            //    _lotesCont++;
-            //}
-            //Proceso newProcess = new Proceso();
-            //try
-            //{
-            //    if (textBoxProgrammerName.Text == "")
-            //    {
-            //        MessageBox.Show("Se necesita escribir un Nombre", "Error",
-            //    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //        return;
-            //    }
-            //    newProcess.Name = textBoxProgrammerName.Text;
-            //    newProcess.TimeMax = int.Parse(textBoxTimeMax.Text);
-            //    newProcess.opName = Evaluate(textBoxOp.Text);
-            //    // Validamos que no haya ids repetidos
-            //    foreach (Proceso p in _Procesos)
-            //    {
-            //        if (p.id == textBoxId.Text)
-            //        {
-            //            MessageBox.Show("Id repetido", "Error",
-            //    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //            return;
-            //        }
-            //    }
-            //    //Validamos que si se haya escrito el nombre de programador
-                
-            //    newProcess.id = textBoxId.Text;
-            //    _Procesos.Enqueue(newProcess);
-            //    if (_Procesos.Count % 3 == 0)
-            //    {
-            //        _lotesCont++;
-            //    }
-            //    contLabelToBeUsed = (int)_labelsUsedEnum.errores;
-            //    processInfo("Proceso: " + (_Procesos.Count + 1));
-            //}
-            //catch (Exception exc)
-            //{
-            //    MessageBox.Show("Datos incorrectos", "Error",
-            //    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-           
-          
-            //Aquí les recomiendo que hagan la parte de validación y la parte de agregar los procesos a la cola de procesos
-        }
+      
         //Funcion para hacer operaciones dentro de un string
         public static string Evaluate(string expression)
         {
@@ -179,10 +143,9 @@ namespace Practica1
                 _Procesos.ElementAt(i).TimeMax = random.Next(7, 18);
                 _Procesos.ElementAt(i).id = i.ToString();
                 _Procesos.ElementAt(i).opName = ""+random.Next(0, 100) + _operaciones[random.Next(0, 3)] + random.Next(0, 100);
-                if((i)%3==0)
-                {
-                    _lotesCont++;
-                }
+                
+                 
+                
 
             }
 
@@ -191,6 +154,7 @@ namespace Practica1
         private async void FCFSSchedulling()
         {        
             int initialValue = 0;
+            Queue<int> blocked = new Queue<int>();
             stop = false;
             #region Ejecución de procesos
             FillList();
@@ -212,17 +176,20 @@ namespace Practica1
                     {
                         reSize(_display_options_used.ElementAt(i), _Procesos.ElementAt(i).TimeMax * 10 + 10);
                     }
-                    
+                    if(i!=0)
+                    {
+                        _display_options_used.ElementAt(i).BackColor = Color.LimeGreen;
+                    }
 
                     if (i == _count - 1)
                     {
                         break;
                     }
                 }
-                
+
                 #endregion
-                contLabelToBeUsed = (int)_labelsUsedEnum.lotesOutput;
-                processInfo(_lotesCont.ToString());
+                changeLabel(_Procesos.Count.ToString(), _labelsUsedEnum.lotesOutput);
+                
                 // Se verifica que el numero de procesos sea igual al numero de procesos deseado, esto se tiene que modificar
                 //eventualmente
                 while (_display_options_used.Count != 0)//Se verifica que todavia tenemos procesos en la cola
@@ -231,17 +198,8 @@ namespace Practica1
 
                     {
                         
-                        contLabelToBeUsed = (int)_labelsUsedEnum.id;
-                        processInfo(_lotes.ElementAt(0).id);
-                        contLabelToBeUsed = (int)_labelsUsedEnum.operation;
-                        processInfo(_lotes.ElementAt(0).opName);
-                        //contLabelToBeUsed = (int)_labelsUsedEnum.programmerName;
-                        //processInfo(_Procesos.ElementAt(0).Name);
-                        initialValue = _lotes.ElementAt(0).TimeMax;
-
-                        longProcess = initialValue / 15+1;
+                        initialValue = setNewProcess(initialValue);
                         
-
                         SetText(initialValue.ToString());
                         processStart = false;
                     }
@@ -250,34 +208,14 @@ namespace Practica1
                     {
                         _lotes.Enqueue(_lotes.Dequeue());
                         _lotes.Last().TimeMax = initialValue;
-                        contLabelToBeUsed = (int)_labelsUsedEnum.id;
-                        processInfo(_lotes.ElementAt(0).id);
-                        contLabelToBeUsed = (int)_labelsUsedEnum.operation;
-                        processInfo(_lotes.ElementAt(0).opName);
-                        initialValue = _lotes.ElementAt(0).TimeMax;
-                        longProcess = initialValue / 15 + 1;
-                        SetText(initialValue.ToString());
-                        processStart = false;
-                        if (_lotes.ElementAt(0).TimeMax > 15)
-                        {
-                            //longProcess = true;
-                            reSize(_display_options_used.ElementAt(0), 15 * 10 + 10);
-                        }
-                        else
-                        {
-                            reSize(_display_options_used.ElementAt(0), _lotes.ElementAt(0).TimeMax * 10 + 10);
-                        }
-                        if (_lotes.Last().TimeMax > 15)
-                        {
-                            //longProcess = true;
-                            reSize(_display_options_used.Last(), 15 * 10 + 10);
-                        }
-                        else
-                        {
-                            reSize(_display_options_used.Last(), _lotes.Last().TimeMax * 10 + 10);
-                        }
+                        initialValue = setNewProcess(initialValue);
+                        _display_options_used.ElementAt(0).BackColor = Color.LightCoral;
+                        _display_options_used.Enqueue(_display_options_used.Dequeue());
+                        
+                       
+                        processStart = true;
                         interrupcion = false;
-
+                       
                     }
                     if (error)
                     {
@@ -299,14 +237,10 @@ namespace Practica1
 
                     if (_display_options_used.First().Size.Height > 10)//Verificamos que la barra actual no se haya "Terminado"
                     {
-                        _display_options_used.First().BackColor = Color.Red;//El proceso actual se pone en rojo
+                        _display_options_used.First().BackColor = Color.Aquamarine;//El proceso actual se pone en aquamarine
 
 
-                        if (_display_options_used.Count > 1)
-                        {
-                            // Si hay más de un proceso por terminar entonces se pone a el siguiente en azul
-                            _display_options_used.ElementAt(1).BackColor = Color.Blue;
-                        }
+                        
                         //Se ajusta el tamaño de la barra, disminuyendo la altura
                         reSize(_display_options_used.First(), _display_options_used.First().Size.Height - 10);
                         //Aquí ajustamos cada cuanto queremos que se espere nuestro planificador
@@ -315,9 +249,9 @@ namespace Practica1
                             Thread.Sleep(100);
                             globalTimer();
                             initialValue--;
-                            contLabelToBeUsed = (int)_labelsUsedEnum.time;
-                            processInfo(string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')));
-                            SetText(initialValue.ToString());
+                            changeLabel(string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')), _labelsUsedEnum.time);
+                            changeLabel(initialValue.ToString(), _labelsUsedEnum.timerProcc);
+                           
                            
                             //Para motivos de pruebas lo tengo en 100 pero deberia ser 1000 <---
                         });
@@ -341,10 +275,34 @@ namespace Practica1
                         }
                         else
                         {
+
                             _display_options_used.ElementAt(0).BackColor = Color.DimGray;
-                            _display_options_used.Dequeue();
                             SetList(_lotes.Dequeue());
-                            _Procesos.Dequeue();
+                            if (_Procesos.Count!=0)
+                            {
+                                _lotes.Enqueue(_Procesos.Dequeue());
+                                _display_options_used.Enqueue(_display_options_used.Dequeue());
+                                if (_lotes.Last().TimeMax > 15)
+                                {
+                                    //longProcess = true;
+                                    reSize(_display_options_used.Last(), 15 * 10 + 10);
+                                }
+                                else
+                                {
+                                    reSize(_display_options_used.Last(), _lotes.Last().TimeMax * 10 + 10);
+                                }
+                                
+                                _display_options_used.Last().BackColor = Color.LimeGreen;
+                                
+                            }
+                            else
+                            {
+                                _display_options_used.Dequeue();
+                                
+                            }
+                            
+                            changeLabel(_Procesos.Count.ToString(), _labelsUsedEnum.lotesOutput);
+
                             processStart = true;
                         }
                         
@@ -360,14 +318,12 @@ namespace Practica1
                 
                 if (_Procesos.Count == 0)//Validamos que se necesita seguir con la ejecución 
                 {
-                    _lotesCont--;
-                    contLabelToBeUsed = (int)_labelsUsedEnum.lotesOutput;
-                    processInfo(_lotesCont.ToString());
+                    
                     stop = true;
                     break;
                 }
                 
-                _lotesCont--;
+               
                 
             }
             
@@ -376,8 +332,23 @@ namespace Practica1
             
 
         }
-   
-        
+        //Funcion para cambiar los labels
+        private void changeLabel(string newtext,_labelsUsedEnum toBeChanged)
+        {
+            contLabelToBeUsed = (int)toBeChanged;
+            processInfo(newtext);
+        }
+        //Funcion para cambiar los labels cuando de cambia de proceso
+        private int setNewProcess(int initialValue)
+        {
+            changeLabel(_lotes.ElementAt(0).id, _labelsUsedEnum.id);
+            changeLabel(_lotes.ElementAt(0).opName, _labelsUsedEnum.operation);
+            initialValue = _lotes.ElementAt(0).TimeMax;
+            longProcess = initialValue / 15 + 1;
+            changeLabel(initialValue.ToString(), _labelsUsedEnum.timerProcc);
+            return initialValue;
+        }
+
         private void label2_Click(object sender, EventArgs e)
         {
 
@@ -515,6 +486,16 @@ namespace Practica1
         private void tabPage2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             System.Console.WriteLine("Hola");
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage2_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void processTimerset()

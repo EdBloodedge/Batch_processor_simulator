@@ -30,6 +30,12 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.blockedTimer3 = new System.Windows.Forms.Label();
+            this.blockedTimer2 = new System.Windows.Forms.Label();
+            this.blockedTimer1 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.listViewPastProcesses = new System.Windows.Forms.ListView();
             this.id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.operacion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -70,6 +76,12 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.SeaShell;
+            this.tabPage2.Controls.Add(this.blockedTimer3);
+            this.tabPage2.Controls.Add(this.blockedTimer2);
+            this.tabPage2.Controls.Add(this.blockedTimer1);
+            this.tabPage2.Controls.Add(this.groupBox6);
+            this.tabPage2.Controls.Add(this.groupBox5);
+            this.tabPage2.Controls.Add(this.groupBox4);
             this.tabPage2.Controls.Add(this.listViewPastProcesses);
             this.tabPage2.Controls.Add(this.groupBoxInProgress);
             this.tabPage2.Controls.Add(this.label1);
@@ -84,7 +96,63 @@
             this.tabPage2.Size = new System.Drawing.Size(793, 421);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Procesos";
+            this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             this.tabPage2.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.tabPage2_PreviewKeyDown);
+            // 
+            // blockedTimer3
+            // 
+            this.blockedTimer3.AutoSize = true;
+            this.blockedTimer3.Location = new System.Drawing.Point(216, 169);
+            this.blockedTimer3.Name = "blockedTimer3";
+            this.blockedTimer3.Size = new System.Drawing.Size(0, 16);
+            this.blockedTimer3.TabIndex = 17;
+            // 
+            // blockedTimer2
+            // 
+            this.blockedTimer2.AutoSize = true;
+            this.blockedTimer2.Location = new System.Drawing.Point(125, 169);
+            this.blockedTimer2.Name = "blockedTimer2";
+            this.blockedTimer2.Size = new System.Drawing.Size(0, 16);
+            this.blockedTimer2.TabIndex = 16;
+            // 
+            // blockedTimer1
+            // 
+            this.blockedTimer1.AutoSize = true;
+            this.blockedTimer1.Location = new System.Drawing.Point(25, 169);
+            this.blockedTimer1.Name = "blockedTimer1";
+            this.blockedTimer1.Size = new System.Drawing.Size(0, 16);
+            this.blockedTimer1.TabIndex = 15;
+            this.blockedTimer1.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.BackColor = System.Drawing.Color.LightCoral;
+            this.groupBox6.Location = new System.Drawing.Point(291, 66);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(96, 24);
+            this.groupBox6.TabIndex = 14;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Bloqueado";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.BackColor = System.Drawing.Color.Aquamarine;
+            this.groupBox5.Location = new System.Drawing.Point(291, 36);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(96, 24);
+            this.groupBox5.TabIndex = 13;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Ejecucion";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.BackColor = System.Drawing.Color.LimeGreen;
+            this.groupBox4.Location = new System.Drawing.Point(291, 6);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(96, 24);
+            this.groupBox4.TabIndex = 12;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Listo";
             // 
             // listViewPastProcesses
             // 
@@ -254,18 +322,18 @@
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.Color.DimGray;
-            this.groupBox3.Location = new System.Drawing.Point(132, 6);
+            this.groupBox3.Location = new System.Drawing.Point(219, 6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(23, 160);
+            this.groupBox3.Size = new System.Drawing.Size(46, 160);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             // 
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.DimGray;
-            this.groupBox2.Location = new System.Drawing.Point(80, 6);
+            this.groupBox2.Location = new System.Drawing.Point(126, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(23, 160);
+            this.groupBox2.Size = new System.Drawing.Size(43, 160);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             // 
@@ -274,7 +342,7 @@
             this.groupBox1.BackColor = System.Drawing.Color.DimGray;
             this.groupBox1.Location = new System.Drawing.Point(28, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(23, 160);
+            this.groupBox1.Size = new System.Drawing.Size(45, 160);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -287,7 +355,7 @@
             this.Controls.Add(this.tabControl1);
             this.KeyPreview = true;
             this.Name = "input_window";
-            this.Text = "Practica2";
+            this.Text = "Practica 3";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.input_window_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.input_window_KeyPress);
@@ -324,6 +392,12 @@
         private System.Windows.Forms.ColumnHeader id;
         private System.Windows.Forms.ColumnHeader operacion;
         private System.Windows.Forms.ColumnHeader tiempo;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label blockedTimer3;
+        private System.Windows.Forms.Label blockedTimer2;
+        private System.Windows.Forms.Label blockedTimer1;
     }
 }
 
