@@ -21,6 +21,14 @@ namespace Practica1
 {
     public partial class input_window : Form
     {
+        // Variables para tiempos
+        DateTime tiempoLlegada;
+        DateTime tiempoFinalizacion;
+        TimeSpan tiempoRetorno;
+        TimeSpan tiempoRespuesta;
+        TimeSpan tiempoEspera;
+        TimeSpan tiempoServicio;
+
         Queue<Proceso> _Procesos = new Queue<Proceso>();//Se crea la lista de procesos
         Queue<Proceso> _lotes = new Queue<Proceso>();
         Queue<GroupBox> _display_options = new Queue<GroupBox>();//Se crea la lista para las opciones de barras
@@ -151,11 +159,27 @@ namespace Practica1
 
 
         }
+        // Define un delegado para actualizar el texto del label
+        delegate void SetLabelTextDelegate(Label label, string text);
+
+        // Método para actualizar el texto del label de forma segura
+        private void SetLabelText(Label label, string text)
+        {
+            if (label.InvokeRequired)
+            {
+                label.Invoke(new SetLabelTextDelegate(SetLabelText), label, text);
+            }
+            else
+            {
+                label.Text = text;
+            }
+        }
         private async void FCFSSchedulling()
         {        
             int initialValue = 0;
             Queue<int> blocked = new Queue<int>();
             stop = false;
+            // Llegada de un nuevo proceso
             #region Ejecución de procesos
             FillList();
             while (_Procesos.Count != 0)
@@ -195,9 +219,9 @@ namespace Practica1
                 while (_display_options_used.Count != 0)//Se verifica que todavia tenemos procesos en la cola
                 {
                     if (processStart)
-
                     {
-                        
+                        tiempoLlegada = DateTime.Now;
+                        SetLabelText(labelLlegadaTxt, tiempoLlegada.ToString());
                         initialValue = setNewProcess(initialValue);
                         
                         SetText(initialValue.ToString());
@@ -232,7 +256,8 @@ namespace Practica1
                         }
 
                     }
-
+                    tiempoFinalizacion = DateTime.Now;
+                    SetLabelText(labelFinalizacionTxt, tiempoFinalizacion.ToString());
                     #region EstiloDeBarras
 
                     if (_display_options_used.First().Size.Height > 10)//Verificamos que la barra actual no se haya "Terminado"
@@ -318,13 +343,15 @@ namespace Practica1
                 
                 if (_Procesos.Count == 0)//Validamos que se necesita seguir con la ejecución 
                 {
-                    
+                    // Finalización del proceso
+                    // Calcular tiempos
+                    //tiempoRetorno = tiempoFinalizacion - tiempoLlegada;
+                    //tiempoRespuesta = tiempoLlegada - tiempoRespuesta;
+                    //tiempoEspera = tiempoRetorno - tiempoServicio;
                     stop = true;
                     break;
                 }
-                
-               
-                
+
             }
             
             
@@ -494,6 +521,16 @@ namespace Practica1
         }
 
         private void tabPage2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click_1(object sender, EventArgs e)
         {
 
         }
