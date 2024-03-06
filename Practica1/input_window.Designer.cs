@@ -30,6 +30,11 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBoxTimer = new System.Windows.Forms.GroupBox();
+            this.labelFinalizacionTxt = new System.Windows.Forms.Label();
+            this.labelLlegadaTxt = new System.Windows.Forms.Label();
+            this.labelFinalizacion = new System.Windows.Forms.Label();
+            this.labelLlegada = new System.Windows.Forms.Label();
             this.blockedTimer3 = new System.Windows.Forms.Label();
             this.blockedTimer2 = new System.Windows.Forms.Label();
             this.blockedTimer1 = new System.Windows.Forms.Label();
@@ -56,15 +61,18 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBoxTimer = new System.Windows.Forms.GroupBox();
-            this.labelLlegada = new System.Windows.Forms.Label();
-            this.labelFinalizacion = new System.Windows.Forms.Label();
-            this.labelLlegadaTxt = new System.Windows.Forms.Label();
-            this.labelFinalizacionTxt = new System.Windows.Forms.Label();
+            this.labelRetorno = new System.Windows.Forms.Label();
+            this.labelRespuesta = new System.Windows.Forms.Label();
+            this.labelEspera = new System.Windows.Forms.Label();
+            this.labelServicio = new System.Windows.Forms.Label();
+            this.labelServicioTxt = new System.Windows.Forms.Label();
+            this.labelRetornoTxt = new System.Windows.Forms.Label();
+            this.labelRespuestaTxt = new System.Windows.Forms.Label();
+            this.labelEsperaTxt = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.groupBoxInProgress.SuspendLayout();
             this.groupBoxTimer.SuspendLayout();
+            this.groupBoxInProgress.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -107,6 +115,67 @@
             this.tabPage2.Text = "Procesos";
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             this.tabPage2.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.tabPage2_PreviewKeyDown);
+            // 
+            // groupBoxTimer
+            // 
+            this.groupBoxTimer.Controls.Add(this.labelEsperaTxt);
+            this.groupBoxTimer.Controls.Add(this.labelRespuestaTxt);
+            this.groupBoxTimer.Controls.Add(this.labelRetornoTxt);
+            this.groupBoxTimer.Controls.Add(this.labelServicioTxt);
+            this.groupBoxTimer.Controls.Add(this.labelServicio);
+            this.groupBoxTimer.Controls.Add(this.labelEspera);
+            this.groupBoxTimer.Controls.Add(this.labelRespuesta);
+            this.groupBoxTimer.Controls.Add(this.labelRetorno);
+            this.groupBoxTimer.Controls.Add(this.labelFinalizacionTxt);
+            this.groupBoxTimer.Controls.Add(this.labelLlegadaTxt);
+            this.groupBoxTimer.Controls.Add(this.labelFinalizacion);
+            this.groupBoxTimer.Controls.Add(this.labelLlegada);
+            this.groupBoxTimer.Location = new System.Drawing.Point(442, 241);
+            this.groupBoxTimer.Name = "groupBoxTimer";
+            this.groupBoxTimer.Size = new System.Drawing.Size(428, 241);
+            this.groupBoxTimer.TabIndex = 18;
+            this.groupBoxTimer.TabStop = false;
+            this.groupBoxTimer.Text = "Tiempo";
+            // 
+            // labelFinalizacionTxt
+            // 
+            this.labelFinalizacionTxt.AutoSize = true;
+            this.labelFinalizacionTxt.Location = new System.Drawing.Point(145, 71);
+            this.labelFinalizacionTxt.Name = "labelFinalizacionTxt";
+            this.labelFinalizacionTxt.Size = new System.Drawing.Size(18, 20);
+            this.labelFinalizacionTxt.TabIndex = 3;
+            this.labelFinalizacionTxt.Text = "0";
+            // 
+            // labelLlegadaTxt
+            // 
+            this.labelLlegadaTxt.AutoSize = true;
+            this.labelLlegadaTxt.Location = new System.Drawing.Point(145, 35);
+            this.labelLlegadaTxt.Name = "labelLlegadaTxt";
+            this.labelLlegadaTxt.Size = new System.Drawing.Size(18, 20);
+            this.labelLlegadaTxt.TabIndex = 2;
+            this.labelLlegadaTxt.Text = "0";
+            // 
+            // labelFinalizacion
+            // 
+            this.labelFinalizacion.AutoSize = true;
+            this.labelFinalizacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelFinalizacion.Location = new System.Drawing.Point(16, 71);
+            this.labelFinalizacion.Name = "labelFinalizacion";
+            this.labelFinalizacion.Size = new System.Drawing.Size(104, 20);
+            this.labelFinalizacion.TabIndex = 1;
+            this.labelFinalizacion.Text = "Finalizacion";
+            this.labelFinalizacion.Click += new System.EventHandler(this.label6_Click_1);
+            // 
+            // labelLlegada
+            // 
+            this.labelLlegada.AutoSize = true;
+            this.labelLlegada.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelLlegada.Location = new System.Drawing.Point(16, 35);
+            this.labelLlegada.Name = "labelLlegada";
+            this.labelLlegada.Size = new System.Drawing.Size(73, 20);
+            this.labelLlegada.TabIndex = 0;
+            this.labelLlegada.Text = "Llegada";
+            this.labelLlegada.Click += new System.EventHandler(this.label5_Click_1);
             // 
             // blockedTimer3
             // 
@@ -371,58 +440,81 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
-            // groupBoxTimer
+            // labelRetorno
             // 
-            this.groupBoxTimer.Controls.Add(this.labelFinalizacionTxt);
-            this.groupBoxTimer.Controls.Add(this.labelLlegadaTxt);
-            this.groupBoxTimer.Controls.Add(this.labelFinalizacion);
-            this.groupBoxTimer.Controls.Add(this.labelLlegada);
-            this.groupBoxTimer.Location = new System.Drawing.Point(442, 241);
-            this.groupBoxTimer.Name = "groupBoxTimer";
-            this.groupBoxTimer.Size = new System.Drawing.Size(428, 159);
-            this.groupBoxTimer.TabIndex = 18;
-            this.groupBoxTimer.TabStop = false;
-            this.groupBoxTimer.Text = "Tiempo";
+            this.labelRetorno.AutoSize = true;
+            this.labelRetorno.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelRetorno.Location = new System.Drawing.Point(16, 106);
+            this.labelRetorno.Name = "labelRetorno";
+            this.labelRetorno.Size = new System.Drawing.Size(74, 20);
+            this.labelRetorno.TabIndex = 4;
+            this.labelRetorno.Text = "Retorno";
             // 
-            // labelLlegada
+            // labelRespuesta
             // 
-            this.labelLlegada.AutoSize = true;
-            this.labelLlegada.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelLlegada.Location = new System.Drawing.Point(16, 35);
-            this.labelLlegada.Name = "labelLlegada";
-            this.labelLlegada.Size = new System.Drawing.Size(83, 20);
-            this.labelLlegada.TabIndex = 0;
-            this.labelLlegada.Text = "Llegada: ";
-            this.labelLlegada.Click += new System.EventHandler(this.label5_Click_1);
+            this.labelRespuesta.AutoSize = true;
+            this.labelRespuesta.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelRespuesta.Location = new System.Drawing.Point(16, 138);
+            this.labelRespuesta.Name = "labelRespuesta";
+            this.labelRespuesta.Size = new System.Drawing.Size(96, 20);
+            this.labelRespuesta.TabIndex = 5;
+            this.labelRespuesta.Text = "Respuesta";
             // 
-            // labelFinalizacion
+            // labelEspera
             // 
-            this.labelFinalizacion.AutoSize = true;
-            this.labelFinalizacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelFinalizacion.Location = new System.Drawing.Point(20, 86);
-            this.labelFinalizacion.Name = "labelFinalizacion";
-            this.labelFinalizacion.Size = new System.Drawing.Size(104, 20);
-            this.labelFinalizacion.TabIndex = 1;
-            this.labelFinalizacion.Text = "Finalizacion";
-            this.labelFinalizacion.Click += new System.EventHandler(this.label6_Click_1);
+            this.labelEspera.AutoSize = true;
+            this.labelEspera.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelEspera.Location = new System.Drawing.Point(16, 171);
+            this.labelEspera.Name = "labelEspera";
+            this.labelEspera.Size = new System.Drawing.Size(66, 20);
+            this.labelEspera.TabIndex = 6;
+            this.labelEspera.Text = "Espera";
             // 
-            // labelLlegadaTxt
+            // labelServicio
             // 
-            this.labelLlegadaTxt.AutoSize = true;
-            this.labelLlegadaTxt.Location = new System.Drawing.Point(141, 35);
-            this.labelLlegadaTxt.Name = "labelLlegadaTxt";
-            this.labelLlegadaTxt.Size = new System.Drawing.Size(18, 20);
-            this.labelLlegadaTxt.TabIndex = 2;
-            this.labelLlegadaTxt.Text = "0";
+            this.labelServicio.AutoSize = true;
+            this.labelServicio.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelServicio.Location = new System.Drawing.Point(16, 206);
+            this.labelServicio.Name = "labelServicio";
+            this.labelServicio.Size = new System.Drawing.Size(72, 20);
+            this.labelServicio.TabIndex = 7;
+            this.labelServicio.Text = "Servicio";
             // 
-            // labelFinalizacionTxt
+            // labelServicioTxt
             // 
-            this.labelFinalizacionTxt.AutoSize = true;
-            this.labelFinalizacionTxt.Location = new System.Drawing.Point(145, 85);
-            this.labelFinalizacionTxt.Name = "labelFinalizacionTxt";
-            this.labelFinalizacionTxt.Size = new System.Drawing.Size(18, 20);
-            this.labelFinalizacionTxt.TabIndex = 3;
-            this.labelFinalizacionTxt.Text = "0";
+            this.labelServicioTxt.AutoSize = true;
+            this.labelServicioTxt.Location = new System.Drawing.Point(145, 206);
+            this.labelServicioTxt.Name = "labelServicioTxt";
+            this.labelServicioTxt.Size = new System.Drawing.Size(18, 20);
+            this.labelServicioTxt.TabIndex = 8;
+            this.labelServicioTxt.Text = "0";
+            // 
+            // labelRetornoTxt
+            // 
+            this.labelRetornoTxt.AutoSize = true;
+            this.labelRetornoTxt.Location = new System.Drawing.Point(145, 108);
+            this.labelRetornoTxt.Name = "labelRetornoTxt";
+            this.labelRetornoTxt.Size = new System.Drawing.Size(18, 20);
+            this.labelRetornoTxt.TabIndex = 9;
+            this.labelRetornoTxt.Text = "0";
+            // 
+            // labelRespuestaTxt
+            // 
+            this.labelRespuestaTxt.AutoSize = true;
+            this.labelRespuestaTxt.Location = new System.Drawing.Point(145, 139);
+            this.labelRespuestaTxt.Name = "labelRespuestaTxt";
+            this.labelRespuestaTxt.Size = new System.Drawing.Size(18, 20);
+            this.labelRespuestaTxt.TabIndex = 10;
+            this.labelRespuestaTxt.Text = "0";
+            // 
+            // labelEsperaTxt
+            // 
+            this.labelEsperaTxt.AutoSize = true;
+            this.labelEsperaTxt.Location = new System.Drawing.Point(145, 171);
+            this.labelEsperaTxt.Name = "labelEsperaTxt";
+            this.labelEsperaTxt.Size = new System.Drawing.Size(18, 20);
+            this.labelEsperaTxt.TabIndex = 11;
+            this.labelEsperaTxt.Text = "0";
             // 
             // input_window
             // 
@@ -441,10 +533,10 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            this.groupBoxInProgress.ResumeLayout(false);
-            this.groupBoxInProgress.PerformLayout();
             this.groupBoxTimer.ResumeLayout(false);
             this.groupBoxTimer.PerformLayout();
+            this.groupBoxInProgress.ResumeLayout(false);
+            this.groupBoxInProgress.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -484,6 +576,14 @@
         private System.Windows.Forms.Label labelLlegadaTxt;
         private System.Windows.Forms.Label labelFinalizacion;
         private System.Windows.Forms.Label labelLlegada;
+        private System.Windows.Forms.Label labelEsperaTxt;
+        private System.Windows.Forms.Label labelRespuestaTxt;
+        private System.Windows.Forms.Label labelRetornoTxt;
+        private System.Windows.Forms.Label labelServicioTxt;
+        private System.Windows.Forms.Label labelServicio;
+        private System.Windows.Forms.Label labelEspera;
+        private System.Windows.Forms.Label labelRespuesta;
+        private System.Windows.Forms.Label labelRetorno;
     }
 }
 

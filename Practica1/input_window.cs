@@ -24,10 +24,7 @@ namespace Practica1
         // Variables para tiempos
         DateTime tiempoLlegada;
         DateTime tiempoFinalizacion;
-        TimeSpan tiempoRetorno;
-        TimeSpan tiempoRespuesta;
-        TimeSpan tiempoEspera;
-        TimeSpan tiempoServicio;
+        DateTime tiempoDePrimeraAtencion;
 
         Queue<Proceso> _Procesos = new Queue<Proceso>();//Se crea la lista de procesos
         Queue<Proceso> _lotes = new Queue<Proceso>();
@@ -222,8 +219,11 @@ namespace Practica1
                     {
                         tiempoLlegada = DateTime.Now;
                         SetLabelText(labelLlegadaTxt, tiempoLlegada.ToString());
-                        initialValue = setNewProcess(initialValue);
                         
+                        // Se asigna el tiempo de primera atención
+                        if (initialValue == 0) { tiempoDePrimeraAtencion = tiempoLlegada; }
+
+                        initialValue = setNewProcess(initialValue);
                         SetText(initialValue.ToString());
                         processStart = false;
                     }
@@ -258,6 +258,18 @@ namespace Practica1
                     }
                     tiempoFinalizacion = DateTime.Now;
                     SetLabelText(labelFinalizacionTxt, tiempoFinalizacion.ToString());
+
+                    TimeSpan tiempoRetorno = (tiempoFinalizacion - tiempoLlegada);
+                    SetLabelText(labelRetornoTxt, tiempoRetorno.ToString());
+
+                    DateTime tiempoRespuesta = tiempoLlegada.Subtract(tiempoRetorno);
+                    SetLabelText(labelRespuestaTxt, tiempoRespuesta.ToString("ss.ff"));
+
+                   
+
+                    //TimeSpan tiempoEspera = (tiempoRetorno - tiempoServicio);
+
+
                     #region EstiloDeBarras
 
                     if (_display_options_used.First().Size.Height > 10)//Verificamos que la barra actual no se haya "Terminado"
