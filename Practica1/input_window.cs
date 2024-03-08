@@ -25,7 +25,7 @@ namespace Practica1
         Queue<Proceso> _lotes = new Queue<Proceso>();
         Queue<GroupBox> _display_options = new Queue<GroupBox>();//Se crea la lista para las opciones de barras
         Queue<GroupBox> _display_options_used = new Queue<GroupBox>();//Se crea la lista para las barras en uso
-       
+        Queue<Proceso> interruptedProcesses = new Queue<Proceso>();
         int longProcess = 0;
         Queue<Label> labelsUsed = new Queue<Label>();
         int contLabelToBeUsed = 0;
@@ -156,6 +156,11 @@ namespace Practica1
             int initialValue = 0;
             Queue<int> blocked = new Queue<int>();
             stop = false;
+<<<<<<< Updated upstream
+=======
+  
+            // Llegada de un nuevo proceso
+>>>>>>> Stashed changes
             #region Ejecución de procesos
             FillList();
             while (_Procesos.Count != 0)
@@ -166,6 +171,9 @@ namespace Practica1
                     
                     _display_options_used.Enqueue(_display_options.ElementAt(i));
                     _lotes.Enqueue(_Procesos.ElementAt(i));
+                    _lotes.Last().intLabel = labelsUsed.ElementAt((int)_labelsUsedEnum.blocked1 + i);
+                    _lotes.Last().indexLabel = (int)_labelsUsedEnum.blocked1 + i;
+                    _lotes.Last().gBox = _display_options_used.ElementAt(i);
                    
                     if (_Procesos.ElementAt(i).TimeMax > 15)
                     {
@@ -206,8 +214,12 @@ namespace Practica1
 
                     if (interrupcion)
                     {
-                        _lotes.Enqueue(_lotes.Dequeue());
-                        _lotes.Last().TimeMax = initialValue;
+
+                        _lotes.First().intTime = 10;
+                        
+                        
+                        interruptedProcesses.Enqueue(_lotes.Dequeue());
+                        interruptedProcesses.Last().TimeMax = initialValue;
                         initialValue = setNewProcess(initialValue);
                         _display_options_used.ElementAt(0).BackColor = Color.LightCoral;
                         _display_options_used.Enqueue(_display_options_used.Dequeue());
@@ -220,7 +232,7 @@ namespace Practica1
                     if (error)
                     {
                         _display_options_used.ElementAt(0).BackColor = Color.DimGray;
-                        _display_options_used.Dequeue();
+                        _display_options_used.Enqueue(_display_options_used.Dequeue());
                         _lotes.ElementAt(0).id = "Terminado por error";
                         SetList(_lotes.Dequeue());
                         _Procesos.Dequeue();
@@ -249,6 +261,21 @@ namespace Practica1
                             Thread.Sleep(100);
                             globalTimer();
                             initialValue--;
+                            foreach(Proceso interrupted in interruptedProcesses )
+                            {
+                                interrupted.intTime -= 1;
+                                
+                                changeLabel(interrupted.intTime.ToString(), (_labelsUsedEnum)interrupted.indexLabel);
+                            }
+                            if(interruptedProcesses.Count>0)
+                            {
+                                if (interruptedProcesses.Last().intTime == 0)
+                                {
+                                    _lotes.Enqueue(interruptedProcesses.Dequeue());
+                                    _lotes.Last().gBox.BackColor = Color.LimeGreen;
+                                }
+                            }
+                            
                             changeLabel(string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')), _labelsUsedEnum.time);
                             changeLabel(initialValue.ToString(), _labelsUsedEnum.timerProcc);
                            
@@ -277,11 +304,20 @@ namespace Practica1
                         {
 
                             _display_options_used.ElementAt(0).BackColor = Color.DimGray;
-                            SetList(_lotes.Dequeue());
+                            
                             if (_Procesos.Count!=0)
-                            {
+                            {   
+                               
+                                   
+                                _Procesos.First().intLabel = _lotes.First().intLabel;
+                                _Procesos.First().gBox = _lotes.First().gBox;
+                                SetList(_lotes.Dequeue());
                                 _lotes.Enqueue(_Procesos.Dequeue());
                                 _display_options_used.Enqueue(_display_options_used.Dequeue());
+
+                              
+
+
                                 if (_lotes.Last().TimeMax > 15)
                                 {
                                     //longProcess = true;
