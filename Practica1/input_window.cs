@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Media;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -152,9 +153,8 @@ namespace Practica1
 
         }
         private async void FCFSSchedulling()
-        {        
+        {
             int initialValue = 0;
-            Queue<int> blocked = new Queue<int>();
             stop = false;
 <<<<<<< Updated upstream
 =======
@@ -162,12 +162,23 @@ namespace Practica1
             // Llegada de un nuevo proceso
 >>>>>>> Stashed changes
             #region Ejecución de procesos
+            #endregion
             FillList();
-            while (_Procesos.Count != 0)
+            System.Console.WriteLine(_Procesos.Count);
+            for (int i = 0; i < _count; i++)// Se ajustan los tamaños de las barras dependiendo de cuantas necesitemos
             {
 
-                for (int i = 0; i < _Procesos.Count; i++)// Se ajustan los tamaños de las barras dependiendo de cuantas necesitemos
+                _Procesos.ElementAt(i).intLabel = labelsUsed.ElementAt((int)_labelsUsedEnum.blocked1 + i);
+                _Procesos.ElementAt(i).indexLabel = (int)_labelsUsedEnum.blocked1 + i;
+                _Procesos.ElementAt(i).gBox = _display_options.ElementAt(i);
+
+            }
+            while (_Procesos.Count + interruptedProcesses.Count > 0 || _lotes.Count>0)
+            {
+                
+                if (_lotes.Count+interruptedProcesses.Count <3 && _Procesos.Count > 0)
                 {
+<<<<<<< Updated upstream
                     
                     _display_options_used.Enqueue(_display_options.ElementAt(i));
                     _lotes.Enqueue(_Procesos.ElementAt(i));
@@ -176,32 +187,36 @@ namespace Practica1
                     _lotes.Last().gBox = _display_options_used.ElementAt(i);
                    
                     if (_Procesos.ElementAt(i).TimeMax > 15)
+=======
+                    _lotes.Enqueue(_Procesos.Dequeue());
+                    if (_lotes.Last().TimeMax > 15)
+>>>>>>> Stashed changes
                     {
-                        //longProcess = true;
-                        reSize(_display_options_used.ElementAt(i),15 * 10 + 10);
+                        
+                        reSize(_lotes.Last().gBox, 15 * 10 + 10);
                     }
                     else
                     {
-                        reSize(_display_options_used.ElementAt(i), _Procesos.ElementAt(i).TimeMax * 10 + 10);
+                        reSize(_lotes.Last().gBox, _lotes.Last().TimeMax * 10 + 10);
                     }
-                    if(i!=0)
-                    {
-                        _display_options_used.ElementAt(i).BackColor = Color.LimeGreen;
-                    }
+                    _lotes.Last().gBox.BackColor = Color.LimeGreen;
+                }
+                if (processStart)
+                {
+                    tiempoLlegada = DateTime.Now;
+                    SetLabelText(labelLlegadaTxt, tiempoLlegada.ToString());
 
-                    if (i == _count - 1)
-                    {
-                        break;
-                    }
+                    // Se asigna el tiempo de primera atención
+                    if (initialValue == 0) { tiempoDePrimeraAtencion = tiempoLlegada; }
+
+                    initialValue = setNewProcess(initialValue);
+                    SetText(initialValue.ToString());
+                    processStart = false;
                 }
 
-                #endregion
-                changeLabel(_Procesos.Count.ToString(), _labelsUsedEnum.lotesOutput);
-                
-                // Se verifica que el numero de procesos sea igual al numero de procesos deseado, esto se tiene que modificar
-                //eventualmente
-                while (_display_options_used.Count != 0)//Se verifica que todavia tenemos procesos en la cola
+                if (interrupcion)
                 {
+<<<<<<< Updated upstream
                     if (processStart)
 
                     {
@@ -244,20 +259,60 @@ namespace Practica1
                         }
 
                     }
+=======
 
-                    #region EstiloDeBarras
+                    _lotes.First().intTime = 10;
+                    interruptedProcesses.Enqueue(_lotes.Dequeue());
+                    interruptedProcesses.Last().TimeMax = initialValue;
+                    initialValue = setNewProcess(initialValue);
+                    interruptedProcesses.Last().gBox.BackColor = Color.LightCoral;
+                    processStart = true;
+                    interrupcion = false;
 
-                    if (_display_options_used.First().Size.Height > 10)//Verificamos que la barra actual no se haya "Terminado"
+                }
+                if (error)
+                {
+                    _lotes.First().gBox.BackColor = Color.DimGray;
+                    _lotes.First().id = "Terminado por error";
+                    if (_Procesos.Count() > 0)
                     {
-                        _display_options_used.First().BackColor = Color.Aquamarine;//El proceso actual se pone en aquamarine
+                        _Procesos.First().intLabel = _lotes.First().intLabel;
+                        _Procesos.First().gBox = _lotes.First().gBox;
+                        _Procesos.First().indexLabel = _lotes.First().indexLabel;
+                    }
+                    SetList(_lotes.Dequeue());
+                    error = false;
+                    processStart = true;
+                   
 
+                }
+                while(stop)
+                {
 
-                        
-                        //Se ajusta el tamaño de la barra, disminuyendo la altura
-                        reSize(_display_options_used.First(), _display_options_used.First().Size.Height - 10);
-                        //Aquí ajustamos cada cuanto queremos que se espere nuestro planificador
-                        await Task.Run(() =>
+                }
+                tiempoFinalizacion = DateTime.Now;
+                SetLabelText(labelFinalizacionTxt, tiempoFinalizacion.ToString());
+>>>>>>> Stashed changes
+
+                TimeSpan tiempoRetorno = (tiempoFinalizacion - tiempoLlegada);
+                SetLabelText(labelRetornoTxt, tiempoRetorno.ToString());
+
+                DateTime tiempoRespuesta = tiempoLlegada.Subtract(tiempoRetorno);
+                SetLabelText(labelRespuestaTxt, tiempoRespuesta.ToString("ss.ff"));
+                if (_lotes.First().gBox.Size.Height > 10)//Verificamos que la barra actual no se haya "Terminado"
+                {
+                    _lotes.First().gBox.BackColor = Color.Aquamarine;//El proceso actual se pone en aquamarine
+                    //Se ajusta el tamaño de la barra, disminuyendo la altura
+                    reSize(_lotes.First().gBox, _lotes.First().gBox.Size.Height - 10);
+                    //Aquí ajustamos cada cuanto queremos que se espere nuestro planificador
+                    await Task.Run(() =>
+                    {
+                        Thread.Sleep(100);
+                        globalTimer();
+                        initialValue--;
+                        foreach (Proceso interrupted in interruptedProcesses)
                         {
+<<<<<<< Updated upstream
                             Thread.Sleep(100);
                             globalTimer();
                             initialValue--;
@@ -285,23 +340,55 @@ namespace Practica1
                         
                     }//Si si se termino la quitamos tanto en la lista de los procesos como en la cola de las barras
                     else
-                    {
-                        //Pasar a otra lista primero
-                        if(longProcess>1)
+=======
+                            interrupted.intTime -= 1;
+                            System.Console.WriteLine(interrupted.indexLabel);
+                            changeLabel(interrupted.intTime.ToString(), (_labelsUsedEnum)interrupted.indexLabel);
+                        }
+                        if (interruptedProcesses.Count > 0)
                         {
-                            longProcess--;
-                            if (initialValue > 15)
+                            if (interruptedProcesses.First().intTime == 0)
                             {
-                                reSize(_display_options_used.ElementAt(0), 15 * 10 + 10);
-                                
+                                _lotes.Enqueue(interruptedProcesses.Dequeue());
+                                _lotes.Last().gBox.BackColor = Color.LimeGreen;
                             }
-                            else
-                            {
-                                reSize(_display_options_used.ElementAt(0), initialValue * 10 + 10);
-                            }
+                        }
+
+                        changeLabel(string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0')), _labelsUsedEnum.time);
+                        changeLabel(initialValue.ToString(), _labelsUsedEnum.timerProcc);
+
+
+                        //Para motivos de pruebas lo tengo en 100 pero deberia ser 1000 <---
+                    });
+
+                }
+                else
+                {
+
+
+                    if (initialValue > 15)
+>>>>>>> Stashed changes
+                    {
+                        reSize(_lotes.First().gBox, 15 * 10 + 10);
+
+                    }
+                    else if (initialValue <15 && initialValue!=0)
+                    {
+                        reSize(_lotes.First().gBox, initialValue * 10 + 10);
+                    }
+                    else if (_lotes.Count != 0)
+                    {
+
+                        if(_Procesos.Count()>0)
+                        {
+                            _Procesos.First().intLabel = _lotes.First().intLabel;
+                            _Procesos.First().gBox = _lotes.First().gBox;
+                            _Procesos.First().indexLabel = _lotes.First().indexLabel;
+                            
                         }
                         else
                         {
+<<<<<<< Updated upstream
 
                             _display_options_used.ElementAt(0).BackColor = Color.DimGray;
                             
@@ -340,17 +427,19 @@ namespace Practica1
                             changeLabel(_Procesos.Count.ToString(), _labelsUsedEnum.lotesOutput);
 
                             processStart = true;
+=======
+                            _lotes.First().gBox.BackColor = Color.DimGray;
+>>>>>>> Stashed changes
                         }
                         
+                        SetList(_lotes.Dequeue());
+                        
+                        changeLabel((_Procesos.Count+_lotes.Count).ToString(), _labelsUsedEnum.lotesOutput);
+                        processStart = true;
                     }
-                    
-                    while (stop)
-                    {
 
-                    }
-                    
-                    #endregion
                 }
+<<<<<<< Updated upstream
                 
                 if (_Procesos.Count == 0)//Validamos que se necesita seguir con la ejecución 
                 {
@@ -361,12 +450,12 @@ namespace Practica1
                 
                
                 
+=======
+ 
+>>>>>>> Stashed changes
             }
-            
-            
             stop = true;
-            
-
+            System.Console.WriteLine(_lotes.Count());
         }
         //Funcion para cambiar los labels
         private void changeLabel(string newtext,_labelsUsedEnum toBeChanged)
