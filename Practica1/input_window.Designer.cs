@@ -87,7 +87,11 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             this.tabControl1.Size = new System.Drawing.Size(801, 450);
+=======
+            this.tabControl1.Size = new System.Drawing.Size(1222, 450);
+>>>>>>> Stashed changes
 =======
             this.tabControl1.Size = new System.Drawing.Size(1222, 450);
 >>>>>>> Stashed changes
@@ -114,7 +118,11 @@
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             this.tabPage2.Size = new System.Drawing.Size(793, 421);
+=======
+            this.tabPage2.Size = new System.Drawing.Size(1214, 421);
+>>>>>>> Stashed changes
 =======
             this.tabPage2.Size = new System.Drawing.Size(1214, 421);
 >>>>>>> Stashed changes
@@ -272,6 +280,9 @@
             // 
             this.blockedTimer3.AutoSize = true;
             this.blockedTimer3.Location = new System.Drawing.Point(288, 150);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             this.blockedTimer3.Name = "blockedTimer3";
             this.blockedTimer3.Size = new System.Drawing.Size(0, 16);
@@ -281,7 +292,11 @@
             // 
             this.blockedTimer2.AutoSize = true;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             this.blockedTimer2.Location = new System.Drawing.Point(125, 169);
+=======
+            this.blockedTimer2.Location = new System.Drawing.Point(288, 121);
+>>>>>>> Stashed changes
 =======
             this.blockedTimer2.Location = new System.Drawing.Point(288, 121);
 >>>>>>> Stashed changes
@@ -293,7 +308,11 @@
             // 
             this.blockedTimer1.AutoSize = true;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             this.blockedTimer1.Location = new System.Drawing.Point(25, 169);
+=======
+            this.blockedTimer1.Location = new System.Drawing.Point(288, 93);
+>>>>>>> Stashed changes
 =======
             this.blockedTimer1.Location = new System.Drawing.Point(288, 93);
 >>>>>>> Stashed changes
@@ -341,9 +360,15 @@
             this.tiempo});
             this.listViewPastProcesses.HideSelection = false;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             this.listViewPastProcesses.Location = new System.Drawing.Point(451, 6);
             this.listViewPastProcesses.Name = "listViewPastProcesses";
             this.listViewPastProcesses.Size = new System.Drawing.Size(284, 368);
+=======
+            this.listViewPastProcesses.Location = new System.Drawing.Point(853, 18);
+            this.listViewPastProcesses.Name = "listViewPastProcesses";
+            this.listViewPastProcesses.Size = new System.Drawing.Size(341, 368);
+>>>>>>> Stashed changes
 =======
             this.listViewPastProcesses.Location = new System.Drawing.Point(853, 18);
             this.listViewPastProcesses.Name = "listViewPastProcesses";
@@ -536,7 +561,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             this.ClientSize = new System.Drawing.Size(800, 450);
+=======
+            this.ClientSize = new System.Drawing.Size(1221, 450);
+>>>>>>> Stashed changes
 =======
             this.ClientSize = new System.Drawing.Size(1221, 450);
 >>>>>>> Stashed changes
