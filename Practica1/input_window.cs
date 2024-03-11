@@ -202,6 +202,7 @@ namespace Practica1
                 {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     if (processStart)
 
                     {
@@ -283,6 +284,28 @@ namespace Practica1
                         _Procesos.First().indexLabel = _lotes.First().indexLabel;
                     }
 >>>>>>> Stashed changes
+=======
+
+                    _lotes.First().intTime = 10;
+                    interruptedProcesses.Enqueue(_lotes.Dequeue());
+                    interruptedProcesses.Last().TimeMax = initialValue;
+                    initialValue = setNewProcess(initialValue);
+                    interruptedProcesses.Last().gBox.BackColor = Color.LightCoral;
+                    processStart = true;
+                    interrupcion = false;
+
+                }
+                if (error)
+                {
+                    _lotes.First().gBox.BackColor = Color.DimGray;
+                    _lotes.First().id = "Terminado por error";
+                    if (_Procesos.Count() > 0)
+                    {
+                        _Procesos.First().intLabel = _lotes.First().intLabel;
+                        _Procesos.First().gBox = _lotes.First().gBox;
+                        _Procesos.First().indexLabel = _lotes.First().indexLabel;
+                    }
+>>>>>>> Stashed changes
                     SetList(_lotes.Dequeue());
                     error = false;
                     processStart = true;
@@ -296,6 +319,9 @@ namespace Practica1
                 tiempoFinalizacion = DateTime.Now;
                 SetLabelText(labelFinalizacionTxt, tiempoFinalizacion.ToString());
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -376,6 +402,7 @@ namespace Practica1
                 }
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 
                 if (_Procesos.Count == 0)//Validamos que se necesita seguir con la ejecución 
                 {
@@ -386,6 +413,9 @@ namespace Practica1
                 
                
                 
+=======
+ 
+>>>>>>> Stashed changes
 =======
  
 >>>>>>> Stashed changes
